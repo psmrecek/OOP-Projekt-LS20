@@ -1,4 +1,4 @@
-package Triedy;
+package osoby;
 
 import java.util.*;
 import java.io.*;
@@ -18,12 +18,25 @@ public class ZdravotnaPoistovna implements Serializable{
 		lekar.add(new Lekar(meno, adresa, rodnec, pohlavie));
 	}
 	
-	public void vypisLekarov() {
-		for (Lekar lekar2 : lekar) {
-			System.out.println("Zazmluvneny lekar: " + lekar2.meno);
-		}
+	// Pretazenie
+	public void evidujLekara(String meno, String adresa, String rodnec, char pohlavie, String specializacia) {
+		lekar.add(new SpecializovanyLekar(meno, adresa, rodnec, pohlavie, specializacia));
 	}
 	
+	
+	public void vypisLekarov() {
+		for (Lekar lekar2 : lekar) {
+			// Kontrola, ktorej triedy je instancia lekar
+			if (lekar2 instanceof SpecializovanyLekar) {
+				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
+						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie() + " " + ((SpecializovanyLekar) lekar2).specializacia);
+			}
+			else {
+				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
+						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie());
+			}
+		}
+	}
 
 	public void uloz() throws ClassNotFoundException, IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("evidencia.out"));

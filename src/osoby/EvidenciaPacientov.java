@@ -1,4 +1,4 @@
-package Triedy;
+package osoby;
 
 import java.util.*;
 
