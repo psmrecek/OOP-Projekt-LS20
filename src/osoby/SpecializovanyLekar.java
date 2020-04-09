@@ -9,8 +9,8 @@ public class SpecializovanyLekar extends Lekar{
 	
 	public String specializacia;
 	
-	public SpecializovanyLekar(String meno, String adresa, String rodnec, char pohlavie, String specializacia) {
-		super(meno, adresa, rodnec, pohlavie);
+	public SpecializovanyLekar(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo, String specializacia) {
+		super(meno, adresa, rodnec, pohlavie, nick, heslo);
 		// TODO Auto-generated constructor stub
 		this.specializacia = specializacia;
 	}
@@ -27,10 +27,13 @@ public class SpecializovanyLekar extends Lekar{
 	// Prekonanie metody
 	@Override
 	public void evidujPacienta(Pacient pacient) {
-		if(pacient.vymennyListok)
+		if(pacient.vymennyListok) {
 			this.lekaroviPacienti.add(pacient);
-		else
+			System.out.println(pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno());
+		} else {
 			System.out.println("Pacient nema vymenny listok: " + pacient.zistiMeno() +" "
-								+ pacient.zistiAdresu() +" "+ pacient.zistiRodneCislo() +" "+ pacient.zistiPohlavie());
+					+ pacient.zistiAdresu() +" "+ pacient.zistiRodneCislo() +" "+ pacient.zistiPohlavie());
+		}
+			
 	}
 }

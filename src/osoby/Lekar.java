@@ -16,10 +16,11 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 	protected PrihlasovacieUdaje priudaje;
 	
 	// List pacientov v lekarovej evidencii
-	protected List<Pacient> lekaroviPacienti = new ArrayList<>();
+	public List<Pacient> lekaroviPacienti = new ArrayList<>();
 	
 	public void evidujPacienta(Pacient pacient) {
 		this.lekaroviPacienti.add(pacient);
+		System.out.println(pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno());
 	}
 	
 	public void vypisPacientov() {
@@ -58,8 +59,9 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 //		}
 	}
 	
-	public Lekar(String meno, String adresa, String rodnec, char pohlavie) {
+	public Lekar(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
 		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
+		nastavPrihlasovacieUdaje(nick, heslo);
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 	@Override
 	public String zistiHeslo() {
 		// TODO Auto-generated method stub
-		return this.priudaje.nick;
+		return this.priudaje.heslo;
 	}
 	
 	@Override

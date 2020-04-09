@@ -14,18 +14,14 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	public Predpis predpis;
 	public boolean vymennyListok = false;
 	
-	public Pacient(String meno, String adresa, String rodnec, char pohlavie, boolean listok) {
-		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
-		this.vymennyListok = listok;
-	}
 	
 	public String citajPredpis() {
 		return this.predpis.meno +" ma evidovany predpis s textom: "+ this.predpis.text;
 	}
 	
-	// Pretazenie metody, no len docasne riesenie na otestovanie programu
-	public Pacient(String meno, String adresa, String rodnec, char pohlavie) {
+	public Pacient(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
 		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
+		nastavPrihlasovacieUdaje(nick, heslo);
 	}
 	
 	public void pridajVymennyListok(boolean b) {
@@ -41,7 +37,7 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	@Override
 	public String zistiHeslo() {
 		// TODO Auto-generated method stub
-		return this.priudaje.nick;
+		return this.priudaje.heslo;
 	}
 
 	@Override
