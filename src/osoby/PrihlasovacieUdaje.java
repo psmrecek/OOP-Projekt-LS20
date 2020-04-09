@@ -1,6 +1,8 @@
 package osoby;
 
-public class PrihlasovacieUdaje {
+import java.io.*;
+
+public class PrihlasovacieUdaje implements Serializable{
 	String nick, heslo;
 	
 	public PrihlasovacieUdaje(String nick, String heslo) {

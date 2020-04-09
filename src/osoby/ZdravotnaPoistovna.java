@@ -3,7 +3,7 @@ package osoby;
 import java.util.*;
 import java.io.*;
 
-public class ZdravotnaPoistovna implements Serializable{
+public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje{
 	
 	/**
 	 * 
@@ -13,9 +13,20 @@ public class ZdravotnaPoistovna implements Serializable{
 	
 	public List<Lekar> lekar = new ArrayList<>();
 	public List<Pacient> pacient = new ArrayList<>();
-	
 	public void evidujLekara(String meno, String adresa, String rodnec, char pohlavie) {
 		lekar.add(new Lekar(meno, adresa, rodnec, pohlavie));
+	}
+	
+	private PrihlasovacieUdaje priudaje = new PrihlasovacieUdaje("", "");
+	
+	public boolean autentifikacia(String nick, String heslo) {
+		if (nick.equals(priudaje.nick)) {
+			if (heslo.equals(priudaje.heslo)) {
+				return true;
+			}
+		}
+		return false;
+		
 	}
 	
 	// Pretazenie
@@ -60,6 +71,27 @@ public class ZdravotnaPoistovna implements Serializable{
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("evidencia.out"));
 		out.close();
 	
+	}
+
+
+	@Override
+	public String zistiNick() {
+		// TODO Auto-generated method stub
+		return this.priudaje.nick;
+	}
+
+
+	@Override
+	public String zistiHeslo() {
+		// TODO Auto-generated method stub
+		return this.priudaje.heslo;
+	}
+
+
+	@Override
+	public void nastavPrihlasovacieUdaje(String nick, String heslo) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -11,11 +11,16 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	// Agregacia a enkapsulacia (udaje pristupne len cez metodu)
 	private OsobneUdaje osudaje;
 	private PrihlasovacieUdaje priudaje;
+	public Predpis predpis;
 	public boolean vymennyListok = false;
 	
 	public Pacient(String meno, String adresa, String rodnec, char pohlavie, boolean listok) {
 		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
 		this.vymennyListok = listok;
+	}
+	
+	public String citajPredpis() {
+		return this.predpis.meno +" ma evidovany predpis s textom: "+ this.predpis.text;
 	}
 	
 	// Pretazenie metody, no len docasne riesenie na otestovanie programu
