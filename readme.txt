@@ -1,5 +1,7 @@
 Tema projektu: Zdravotnicky system evidencie lekarov, pacientov, vymennych listkov a predpisov
 
+K priebeznemu odovzdaniu je dostupny diagram tried, ktory zahrna vsetko okrem GUI. Bol vygenerovany programom The ObjectAid UML Explorer.
+
 Poznamky k uzivatelskemu rozhraniu a pokyny k jeho pouzivaniu:
 
 Program sa spusta suborom PrihlasovacieOknoGUI
