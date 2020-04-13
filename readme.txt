@@ -12,15 +12,15 @@ heslo: 123
 a kliknite na tlacidlo 'Prihlasit sa'.
 Otvori sa okno manazera poistovne. 
 Kliknutim na tlacidlo 'Vypisat lekarov' sa v listview vypisu vsetci lekari patriaci pod poistovnu.
-Kliknutim na tlacidlo 'Pridat lekara' sa vytvori v poistovni nove lekar s udajmi, ktore sa zadaju do textfieldov a pripadne mozete vybrat specializaciu.
-Tlacidlo 'Vymazat pole' vymaze listview lekarov. Tlacidlo Vycisti vymaze obsah textfieldov a ostatnych prvkov.
-Tlacidlo 'Ulozit' zmeny spusti serializaciu a ulozi vykonane zmeny tak, aby sa dali pouzivat aj pri opatovnom otvoreni programu.
+Kliknutim na tlacidlo 'Pridat lekara' sa vytvori v poistovni novy lekar s udajmi, ktore sa zadaju do textfieldov a pripadne mozete vybrat specializaciu.
+Tlacidlo 'Vymazat pole' vymaze listview lekarov. Tlacidlo 'Vycisti' vymaze obsah textfieldov a ostatnych prvkov.
+Tlacidlo 'Ulozit' spusti serializaciu a ulozi vykonane zmeny tak, aby sa dali pouzivat aj pri opatovnom otvoreni programu.
 Tlacidlo 'Reset' vymaze serializovane zaznamy a vygeneruje nove. Toto sa vo finalnej verzii nebude nachadzat, ale teraz je potrebne kvoli debuggingu.
 
 Ak sa chcete prihlasit ako vseobecny lekar, zaskrtnite radiobutton 'Lekar' v prihlasovacom okne a zadajte
 prihlasovacie meno: arnost
 heslo: aaa
-V evidencii su 3 lekari. Prihlasovacie meno kazdeho z nich je jeho krstne meno malymi pismenami a prve pismeno jeho mena trikrat.
+V evidencii su 3 lekari, Arnost, Beata a Cyril. Prihlasovacie meno kazdeho z nich je jeho krstne meno malymi pismenami a prve pismeno jeho mena trikrat.
 Po prihlaseni sa otvori okno lekarskych zaznamov.
 Tlacidlo 'Vypisat zoznam pacientov' vypise zoznam lekarovych pacientov do listview a do textarea 'Akcie' vypise hlasenie. V listview je meno pacienta 
 a boolovska hodnota, ci ma vydany vymenny listok, alebo nie. Niektori pacienti ho uz vydany maju, ini, nie.
@@ -47,13 +47,14 @@ skor, ako sa k takemuto lekarovi pacient chce zapisat. Ak pacient vymenny listok
 
 Ak chcete vytvorit noveho pacienta, kliknite v prihlasovacom okne na tlacidlo 'Chcem sa zaregistrovat'.
 Otvori sa okno registracie pacienta. Pacient vyplni svoje osobne udaje a vytvori si prihlasovacie udaje.
-Moznost kontroly, ci uz rovnake prihlasovacie meno v evidencii je NIE JE podporovana. Vyberte prosim jedinecne prihlasovacie meno.
+Moznost kontroly, ci uz rovnake prihlasovacie meno je v evidencii NIE JE podporovana. Vyberte prosim jedinecne prihlasovacie meno.
 Tlacidlo 'Zaregistrovat sa' vytvori noveho pacienta.
 Tlacidlo 'Vycistit' vymaze hodnoty zadane to textiefldov a inych poli.
 Ak si zelate zmeny serializovat, kliknite na tlacidlo 'Ulozit'. 
 
 Poznamky ku kodu a popis najdolezitejsich tried programu
-Hlavnou logika tohoto programu je nasledujuca:
+Program vypisuje kontrolne vypisy na konzlou. Tieto vypisy sa vo finalnej verzii programu neobjavia.
+Logika tohoto programu je nasledujuca:
 Manazer poistovne zaeviduje lekara/ov. Pacient sa zaregistruje, prihlasi sa a nasledne sa zapise k vseobecnemu lekarovi. Vseobecny lekar sa prihlasi
 a vyda pacientovi, ktory sa k nemu zapisal, vymenny listok. Pacient sa opat prihlasi a s vymennym listkom sa zaregistruje k specializovanemu lekarovi.
 
@@ -98,6 +99,7 @@ Kontrolovane kriteria:
 1. Opisat funkcionalitu - opisana vyssie
 
 2. Polymorfizmus - priklad v 'PrihlasenyPacient' - Event handler tlacidla 'navsteva'
+
 		navsteva.setOnAction(e->{
 			if (lwVypisLekarov.getSelectionModel().isEmpty()) {
 				Alert alert = new Alert(AlertType.WARNING);
@@ -123,9 +125,11 @@ Kontrolovane kriteria:
 vymennym listkom, ak je lekar specialista.
 
 dalsi priklad - vo 'VypisLekarovGUI'
+
 		for (Lekar lekar : lekari) {
 			this.getItems().add(lekar.zistiMeno() +" - "+ lekar.zistiSpecializaciu());
 		}
+		
 Metoda 'lekar.zistiSpecializaciu()' sa sprava odlisne, ak je zo zoznamu vybrany specializovany lekar.
 
 3. Dedenie - Moj program obsahuje zatial iba jednu hierarchiu dedenia. 'SpecializovanyLekar' je podtrieda triedy 'Lekar'.
@@ -135,8 +139,8 @@ Dalsie dedenie bude implementovane pri predpisoch. To sa v tejto verzii programu
 Objekt triedy 'ZdravotnaPoistovna' agreguje objekty tried 'Lekar', 'SpecializovanyLekar' aj 'Pacient'.
 
 5. Oddelenie aplikacnej logiky od pouzivatelskej.
-V event handleroch danych elementov GUI volam metody tried ktore tvoria pouzivatelsku logiku a v event handleroch pripadne upravujem vlastnosti elementov GUI.
-V priklade polymorfizmu uvadzam eventhandler ktory na zaklade toho, ci je zvoleny nejaky z vypisov vytvara Alert, alebo sa pokusa zapisat pacienta k lekarovi.
+V event handleroch danych elementov GUI volam metody tried ktore tvoria aplikacnu logiku a v event handleroch pripadne upravujem vlastnosti elementov GUI.
+V priklade polymorfizmu uvadzam event handler ktory na zaklade toho, ci je zvoleny nejaky z vypisov vytvara Alert, alebo sa pokusa zapisat pacienta k lekarovi.
 Ziska objekt lekara zo zdravotnej poistovne a nasledne sa pokusi k lekarovi evidovat pacienta. Metoda evidovania pacienta triedy Lekar vracia boolovsku hodnotu
 na zaklade ktorej sa rozhodne, ci sa zobrazi Alert, alebo nie.
 
@@ -153,9 +157,13 @@ Dalsie priklady event handlerov - 'ManazerPoistovneGUI'
 			specializaciaAktivna.setSelected(false);
 		});
 		
+Vycisti udaje z poli v GUI.
+		
 		vypisAktualnychLekarov.setOnAction(e->{
 			poistovna.vypisLekarov();
 		});
+		
+Zavola metodu poistovne, ktora upovedomi sledovatelov.
 		
 		specializaciaAktivna.setOnAction(e->{
 			if (!specializaciaAktivna.isSelected()) {
@@ -165,6 +173,8 @@ Dalsie priklady event handlerov - 'ManazerPoistovneGUI'
 				specializacia.setDisable(false);;
 			}
 		});
+		
+Meni moznosti upravovania poli v GUI.
 		
 
 
