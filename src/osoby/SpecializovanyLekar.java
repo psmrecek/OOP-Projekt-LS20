@@ -1,9 +1,6 @@
 package osoby;
 
 public class SpecializovanyLekar extends Lekar{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 0;
 	// Pouzite dedenie
 	
@@ -26,14 +23,21 @@ public class SpecializovanyLekar extends Lekar{
 	
 	// Prekonanie metody
 	@Override
-	public void evidujPacienta(Pacient pacient) {
+	public boolean evidujPacienta(Pacient pacient) {
 		if(pacient.vymennyListok) {
 			this.lekaroviPacienti.add(pacient);
 			System.out.println(pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno());
+			return true;
 		} else {
 			System.out.println("Pacient nema vymenny listok: " + pacient.zistiMeno() +" "
 					+ pacient.zistiAdresu() +" "+ pacient.zistiRodneCislo() +" "+ pacient.zistiPohlavie());
+			return false;
 		}
-			
+	}
+	
+	// Prekonanie metody
+	@Override
+	public String zistiSpecializaciu() {
+		return this.specializacia;
 	}
 }

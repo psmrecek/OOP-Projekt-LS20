@@ -1,34 +1,25 @@
 package GUI;
 
 import java.io.IOException;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import poistovna.*;
 
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import main.Main;
-import osoby.EvidenciaPacientov;
-import osoby.Lekar;
-import osoby.ZdravotnaPoistovna;
 
 public class RegistraciaPacientaGUI extends Stage{
 
 	private Button pridajPacienta = new Button("Zaregistrovat sa");
 	private Button uloz = new Button("Ulozit zmeny");
-	private Button vycisTF = new Button("Vycisti textfieldy");
+	private Button vycisTF = new Button("Vycistit");
 	
 	private TextField meno = new TextField();
 	private TextField adresa = new TextField();
 	private TextField rodnec = new TextField();
 	private TextField nick = new TextField();
 	private TextField heslo = new TextField();
-	
 	
 	private Label menoOzn = new Label("Meno pacienta");
 	private Label adresaOzn = new Label("Adresa pacienta");
@@ -57,11 +48,17 @@ public class RegistraciaPacientaGUI extends Stage{
 		pane2.setVgap(10);
 		pane2.setHgap(10);
 		pane2.setPadding(new Insets(10, 10, 10, 10));
-		 
-		menoOzn.setPrefWidth(175);
-		adresaOzn.setPrefWidth(175);
-		rodnecOzn.setPrefWidth(175);
-		pohlavieOzn.setPrefWidth(175);
+		
+		int width = 200;
+		menoOzn.setPrefWidth(width);
+		adresaOzn.setPrefWidth(width);
+		rodnecOzn.setPrefWidth(width);
+		pohlavieOzn.setPrefWidth(width);
+		
+		pridajPacienta.setPrefWidth(width);
+		uloz.setPrefWidth(width);
+		vycisTF.setPrefWidth(width);
+		pohlavie.setPrefWidth(width);
 		
 		int row = 0;
 		
@@ -114,7 +111,7 @@ public class RegistraciaPacientaGUI extends Stage{
 			pohlavie.getSelectionModel().clearSelection();
 		});
 		
-		setScene(new Scene(skrol, 420, 360));
+		setScene(new Scene(skrol, 460, 380));
 		show();
 	}
 }

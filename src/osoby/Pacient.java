@@ -1,22 +1,22 @@
 package osoby;
 
 import java.io.*;
+import java.util.ArrayList;
+
+import poistovna.*;
 
 public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobneUdaje{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 0;
 	
 	// Agregacia a enkapsulacia (udaje pristupne len cez metodu)
 	private OsobneUdaje osudaje;
 	private PrihlasovacieUdaje priudaje;
-	public Predpis predpis;
+	public ArrayList<Predpis> predpisy = new ArrayList<Predpis>();
 	public boolean vymennyListok = false;
 	
 	
-	public String citajPredpis() {
-		return this.predpis.meno +" ma evidovany predpis s textom: "+ this.predpis.text;
+	public String citajPredpis(int index) {
+		return this.predpisy.get(index).zistiMeno() +" ma evidovany predpis s textom: "+ this.predpisy.get(index).zistiText();
 	}
 	
 	public Pacient(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
@@ -31,13 +31,13 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	@Override
 	public String zistiNick() {
 		// TODO Auto-generated method stub
-		return this.priudaje.nick;
+		return this.priudaje.zistiNick();
 	}
 
 	@Override
 	public String zistiHeslo() {
 		// TODO Auto-generated method stub
-		return this.priudaje.heslo;
+		return this.priudaje.zistiHeslo();
 	}
 
 	@Override

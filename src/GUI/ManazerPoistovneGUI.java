@@ -1,37 +1,26 @@
 package GUI;
 
-import javafx.application.*;
-
-import javafx.application.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
-
-import javafx.concurrent.*;
 import java.io.*;
-import java.util.*;
-
-import javafx.geometry.Insets;
-import osoby.*;
-import main.*;
+import javafx.geometry.*;
+import poistovna.*;
 
 public class ManazerPoistovneGUI extends Stage{
 	private Button pridajLekara = new Button("Pridat lekara");
 	private Button reset = new Button("Reset");
 	private Button uloz = new Button("Ulozit zmeny");
-	private Button znovaNacitaj = new Button("Opat deserializuj");
 	private Button vypisAktualnychLekarov = new Button("Vypisat lekarov");
 	private Button vymazPole = new Button("Vymazat pole");
-	private Button vycisTF = new Button("Vycisti textfieldy");
+	private Button vycisTF = new Button("Vycisti");
 	
 	private TextField meno = new TextField();
 	private TextField adresa = new TextField();
 	private TextField rodnec = new TextField();
 	private TextField nick = new TextField();
 	private TextField heslo = new TextField();
-	
 	
 	private Label menoOzn = new Label("Meno lekara");
 	private Label adresaOzn = new Label("Adresa lekara");
@@ -101,15 +90,25 @@ public class ManazerPoistovneGUI extends Stage{
 		
 		pane2.add(specializaciaOzn, 0, row);
 		specializacia.getItems().addAll("Oftamolog", "Dietolog", "Neurolog", "Gastroenterolog");
+		specializacia.setDisable(true);
 		pane2.add(specializacia, 1, row++);
-
-		pane2.add(pridajLekara, 0, row);
-		pane2.add(vypisAktualnychLekarov, 1, row++);
-		pane2.add(znovaNacitaj, 0, row);
-		pane2.add(uloz, 1, row++);
-		pane2.add(reset, 0, row);
-		pane2.add(vymazPole, 1, row++);
-		pane2.add(vycisTF, 0, row);
+		
+		pane2.add(vypisAktualnychLekarov, 0, row);
+		pane2.add(pridajLekara, 1, row++);
+		pane2.add(vymazPole, 0, row);
+		pane2.add(vycisTF, 1, row++);
+		pane2.add(uloz, 0, row);
+		pane2.add(reset, 1, row++);
+		
+		int velkostButton = 200;
+		vypisAktualnychLekarov.setMinWidth(velkostButton);
+		pridajLekara.setMinWidth(velkostButton);
+		vymazPole.setMinWidth(velkostButton);
+		vycisTF.setMinWidth(velkostButton);
+		uloz.setMinWidth(velkostButton);
+		reset.setMinWidth(velkostButton);
+		pohlavie.setMinWidth(velkostButton);
+		specializacia.setMinWidth(velkostButton);
 		
 		GridPane pane3 = new GridPane();
 		pane3.setVgap(10);
@@ -117,7 +116,6 @@ public class ManazerPoistovneGUI extends Stage{
 		pane3.setPadding(new Insets(10, 10, 10, 10));
 		
 		pane3.add(vypisOzn, 0, 0);
-//		pane3.add(vypis, 0, 1);
 		
 		lwVypisLekarov = new VypisLekarovGUI(poistovna);
 		poistovna.pridajSledovatela(lwVypisLekarov);
@@ -129,14 +127,16 @@ public class ManazerPoistovneGUI extends Stage{
 		
 		pridajLekara.setOnAction(e->{
 			if (specializaciaAktivna.isSelected()) {
-				poistovna.evidujLekara(meno.getText(), adresa.getText(), rodnec.getText(), pohlavie.getValue().charAt(0), nick.getText(), heslo.getText(), specializacia.getValue());
+				poistovna.evidujLekara(meno.getText(), adresa.getText(), rodnec.getText(), 
+						pohlavie.getValue().charAt(0), nick.getText(), heslo.getText(), specializacia.getValue());
 			} else {
-				poistovna.evidujLekara(meno.getText(), adresa.getText(), rodnec.getText(), pohlavie.getValue().charAt(0), nick.getText(), heslo.getText());
+				poistovna.evidujLekara(meno.getText(), adresa.getText(), rodnec.getText(), 
+						pohlavie.getValue().charAt(0), nick.getText(), heslo.getText());
 			}
 		});
 		
 		reset.setOnAction(e->{
-			Main main = new Main();
+			ResetVstupov main = new ResetVstupov();
 			main.reset();
 			
   	  		try {
@@ -149,15 +149,6 @@ public class ManazerPoistovneGUI extends Stage{
 		
 		vymazPole.setOnAction(e->{
 			lwVypisLekarov.vymazListView();
-		});
-		
-		znovaNacitaj.setOnAction(e->{
-  	  		try {
-  				poistovna.nacitaj();
-  			} catch (ClassNotFoundException | IOException e1 ) {
-  				// TODO Auto-generated catch block
-  				e1.printStackTrace();
-  			}
 		});
 		
 		uloz.setOnAction(e->{
@@ -187,10 +178,13 @@ public class ManazerPoistovneGUI extends Stage{
 		specializaciaAktivna.setOnAction(e->{
 			if (!specializaciaAktivna.isSelected()) {
 				specializacia.getSelectionModel().clearSelection();
+				specializacia.setDisable(true);
+			} else {
+				specializacia.setDisable(false);;
 			}
 		});
 		
-		setScene(new Scene(skrol, 700, 550));
+		setScene(new Scene(skrol, 800, 500));
 		show();
 	}
 }

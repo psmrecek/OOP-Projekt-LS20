@@ -3,14 +3,13 @@ package GUI;
 import java.io.IOException;
 
 import javafx.application.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import osoby.*;
-
+import poistovna.*;
 
 public class PrihlasovacieOknoGUI extends Application {
 	private Button prihlasenie = new Button("Prihlasit sa");
@@ -24,9 +23,6 @@ public class PrihlasovacieOknoGUI extends Application {
 	private RadioButton le = new RadioButton("Lekar");
 	private RadioButton pa = new RadioButton("Pacient");
 	final ToggleGroup gr = new ToggleGroup();
-	
-//	private TextArea vypis = new TextArea();
-	
 	
 	@Override
 	public void start(Stage hlavneOkno) {
@@ -75,7 +71,6 @@ public class PrihlasovacieOknoGUI extends Application {
 		
 		pane2.add(prihlasenie, 0, 0);
 		pane2.add(registracia, 1, 0);
-//		pane.add(pane2, 0, 2);
 		
 		flowp.getChildren().add(pane2);
 		prihlasenie.setOnAction(e-> {
@@ -103,30 +98,11 @@ public class PrihlasovacieOknoGUI extends Application {
 			new RegistraciaPacientaGUI(poistovna);
 		});
 		
-// 		vytvorBojovnikov.setOnAction(e -> { // lambda vyraz s odvodenim typu z kontextu
-//			stret.vytvorBojovnikov(Integer.parseInt(rytieri.getText()),
-//					Integer.parseInt(statocniRytieri.getText()),
-//					Integer.parseInt(zliObri.getText()));
-//
-//			vypis.appendText("Bojovnici vytvoreni.\n");
-//			}
-//		);
-//
-// 		spustStret.setOnAction(e -> vypis.appendText(stret.stret()));
-// 		vymazText.setOnAction(e -> vypis.clear());
-//
-//		energiaBojovnikov = new EnergiaBojovnikov(stret);
-//		stret.pridajSledovatela(energiaBojovnikov);
-//		pane.getChildren().add(energiaBojovnikov);
-
 		
 		hlavneOkno.setScene(new Scene(flowp, 400, 200));
-//		hlavneOkno.setScene(new Scene(skrol, 500, 300)); // so scrollbarmi
 		hlavneOkno.show();
 	}
 
-	// metoda main() pomoze v pripade zlyhania standardneho sposobu aktivacie JavaFX aplikacie
-	// ale inak nie je potrebna
 	public static void main(String[] args) {
 		launch(args);
 	}

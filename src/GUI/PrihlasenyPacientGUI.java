@@ -2,24 +2,19 @@ package GUI;
 
 import java.io.IOException;
 
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import main.Main;
-import osoby.Pacient;
-import osoby.ZdravotnaPoistovna;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import osoby.*;
+import poistovna.*;
 
 public class PrihlasenyPacientGUI extends Stage{
-	private Button navsteva = new Button("Stat sa pacientom vybraneho lekara");
+	private Button navsteva = new Button("Zapisat sa k vybranemu lekarovi");
 	private Button uloz = new Button("Ulozit zmeny");
-	private Button vypisAktualnychLekarov = new Button("Vypisat lekarov");
+	private Button vypisAktualnychLekarov = new Button("Vypisat vsetkych lekarov");
 	private Button vymazPole = new Button("Vymazat pole");
 	
 	private TextField meno = new TextField();
@@ -27,7 +22,6 @@ public class PrihlasenyPacientGUI extends Stage{
 	private TextField rodnec = new TextField();
 	private TextField pohlavie = new TextField();
 	private TextField vymennyListok = new TextField();
-	
 	
 	private Label menoOzn = new Label("Meno pacienta");
 	private Label adresaOzn = new Label("Adresa pacienta");
@@ -95,6 +89,14 @@ public class PrihlasenyPacientGUI extends Stage{
 		pane2.add(navsteva, 0, row);
 		pane2.add(uloz, 1, row);
 		
+		int velkostButton = 260;
+		int velkostButton2 = 200;
+		vypisAktualnychLekarov.setMinWidth(velkostButton);
+		vymazPole.setMinWidth(velkostButton2);
+		navsteva.setMinWidth(velkostButton);
+		uloz.setMinWidth(velkostButton2);
+		
+		
 		GridPane pane3 = new GridPane();
 		pane3.setVgap(10);
 		pane3.setHgap(10);
@@ -112,9 +114,21 @@ public class PrihlasenyPacientGUI extends Stage{
 		
 		navsteva.setOnAction(e->{
 			if (lwVypisLekarov.getSelectionModel().isEmpty()) {
-				System.out.println("Vyber si lekara.");
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Nevybrany lekar");
+				alert.setContentText("Ziaden lekar zo zoznamu nebol zvoleny.\n"
+						+ "Najskor vyber lekara.");
+				alert.showAndWait();
 			} else {
-				poistovna.vratLekara(lwVypisLekarov.getSelectionModel().getSelectedIndex()).evidujPacienta(pacient);
+				int index = lwVypisLekarov.getSelectionModel().getSelectedIndex();
+				if(!poistovna.vratLekara(index).evidujPacienta(pacient)) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Vymenny listok nebol najdeny");
+					alert.setContentText("K specializovanemu lekarovi mozes ist len s vymennym listkom.\n"
+							+ "Najskor navstiv vseobecneho lekara a poziadaj ho o vydanie vymenneho listka.");
+					alert.showAndWait();
+				}
+				
 			}
 		});
 		
@@ -137,7 +151,8 @@ public class PrihlasenyPacientGUI extends Stage{
 		});
 		
 		
-		setScene(new Scene(skrol, 800, 500));
+		setScene(new Scene(skrol, 850, 500));
 		show();
+		vypisAktualnychLekarov.requestFocus();
 	}
 }

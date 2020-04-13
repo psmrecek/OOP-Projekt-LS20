@@ -4,11 +4,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import poistovna.Predpis;
+
 
 public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobneUdaje {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 0;
 	
 	// Agregacia a enkapsulacia (udaje pristupne len cez metodu)
@@ -18,9 +17,10 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 	// List pacientov v lekarovej evidencii
 	public List<Pacient> lekaroviPacienti = new ArrayList<>();
 	
-	public void evidujPacienta(Pacient pacient) {
+	public boolean evidujPacienta(Pacient pacient) {
 		this.lekaroviPacienti.add(pacient);
 		System.out.println(pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno());
+		return true;
 	}
 	
 	public void vypisPacientov() {
@@ -40,14 +40,18 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 		return null;
 	}
 	
+	public void vydajVymennyListok(Pacient pacient) {
+		pacient.vymennyListok = true;
+	}
+	
 	public void vytvorPredpis(Pacient pacient) {
 		if (lekaroviPacienti.contains(pacient)) {
 			if (pacient.zistiPohlavie() == 'm') {
 				System.out.println("Pacientovi "+ pacient.zistiMeno() +" bol vydany recept od lekara: " + this.zistiMeno());
-				pacient.predpis = new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), "Predpis vydany pre pacienta " + pacient.zistiMeno());
+				pacient.predpisy.add(new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), "Predpis vydany pre pacienta " + pacient.zistiMeno()));
 			} else {
 				System.out.println("Pacientke "+ pacient.zistiMeno() +" bol vydany recept od lekara: " + this.zistiMeno());
-				pacient.predpis = new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), "Predpis vydany pre pacientku " + pacient.zistiMeno());
+				pacient.predpisy.add(new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), "Predpis vydany pre pacientku " + pacient.zistiMeno()));
 			}
 		} 
 //		else {
@@ -63,17 +67,21 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
 		nastavPrihlasovacieUdaje(nick, heslo);
 	}
+	
+	public String zistiSpecializaciu() {
+		return "Vseobecny lekar";
+	}
 
 	@Override
 	public String zistiNick() {
 		// TODO Auto-generated method stub
-		return this.priudaje.nick;
+		return this.priudaje.zistiNick();
 	}
 
 	@Override
 	public String zistiHeslo() {
 		// TODO Auto-generated method stub
-		return this.priudaje.heslo;
+		return this.priudaje.zistiHeslo();
 	}
 	
 	@Override

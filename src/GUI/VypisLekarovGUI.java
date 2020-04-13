@@ -1,21 +1,18 @@
 package GUI;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import javafx.scene.control.*;
+import osoby.*;
+import poistovna.*;
 
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import osoby.Lekar;
-import osoby.SledovatelLekarov;
-import osoby.ZdravotnaPoistovna;
-
-public class VypisLekarovGUI extends ListView implements SledovatelLekarov{
+public class VypisLekarovGUI extends ListView<String> implements SledovatelLekarov{
 	private ZdravotnaPoistovna poistovna;
 	public List<Lekar> lekari = new ArrayList<>();
 	
 	public VypisLekarovGUI(ZdravotnaPoistovna poistovna) {
 		// TODO Auto-generated constructor stub
 		super();
+		this.setMinWidth(300);
 		this.poistovna = poistovna;
 	}
 	
@@ -25,7 +22,7 @@ public class VypisLekarovGUI extends ListView implements SledovatelLekarov{
 		lekari = poistovna.lekari;
 		this.getItems().clear();
 		for (Lekar lekar : lekari) {
-			this.getItems().add(lekar.zistiMeno());
+			this.getItems().add(lekar.zistiMeno() +" - "+ lekar.zistiSpecializaciu());
 		}
 	}
 	

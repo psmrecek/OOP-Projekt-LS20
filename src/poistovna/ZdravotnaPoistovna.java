@@ -1,18 +1,10 @@
-package osoby;
+package poistovna;
 
 import java.util.*;
-
-import GUI.LekarskeZaznamyGUI;
-import GUI.ManazerPoistovneGUI;
-
+import osoby.*;
 import java.io.*;
 
 public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje{
-	
-	/**
-	 * 
-	 */
-//	private static final long serialVersionUID = 1L;
 	private static final long serialVersionUID = 0;
 	
 	public List<Lekar> lekari = new ArrayList<>();
@@ -28,31 +20,11 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 			s.upovedom();
 	}
 	
-
-	
-	private PrihlasovacieUdaje priudaje = new PrihlasovacieUdaje("", "");
-	
-//	public boolean autentifikacia(String nick, String heslo) {
-//		if (nick.equals(priudaje.nick)) {
-//			if (heslo.equals(priudaje.heslo)) {
-//				new ManazerPoistovneGUI(this);
-//				return true;
-//			}
-//		}
-//		for (Lekar lekar : lekari) {
-//			if (lekar.zistiNick().equals(nick)) {
-//				if (lekar.zistiHeslo().equals(heslo)) {
-//					new LekarskeZaznamyGUI(this, lekar);
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-//	}
+	private PrihlasovacieUdaje priudaje = new PrihlasovacieUdaje("admin", "123");
 	
 	public boolean autentifikaciaPoistovne(String nick, String heslo) {
-		if (nick.equals(priudaje.nick)) {
-			if (heslo.equals(priudaje.heslo)) {
+		if (nick.equals(priudaje.zistiNick())) {
+			if (heslo.equals(priudaje.zistiHeslo())) {
 				return true;
 			}
 		}
@@ -97,20 +69,30 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 	
 	
 	public void vypisLekarov() {
-		for (Lekar lekar2 : lekari) {
-			// Kontrola, ktorej triedy je instancia lekar
-			if (lekar2 instanceof SpecializovanyLekar) {
-				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
-						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie() + " " + ((SpecializovanyLekar) lekar2).specializacia + " " + 
-						lekar2.zistiNick() + " " + lekar2.zistiHeslo());
-			}
-			else {
-				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
-						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie()+ " " + 
-								lekar2.zistiNick() + " " + lekar2.zistiHeslo());
-			}
-		}
+//		for (Lekar lekar2 : lekari) {
+//			// Kontrola, ktorej triedy je instancia lekar
+//			if (lekar2 instanceof SpecializovanyLekar) {
+//				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
+//						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie() + " " + ((SpecializovanyLekar) lekar2).specializacia + " " + 
+//						lekar2.zistiNick() + " " + lekar2.zistiHeslo());
+//			}
+//			else {
+//				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
+//						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie()+ " " + 
+//								lekar2.zistiNick() + " " + lekar2.zistiHeslo());
+//			}
+//		}
 		upovedomSledovatelov();
+	}
+	
+	public Lekar vratLekara(int n) {
+		try {
+			return lekari.get(n);
+		} catch (IndexOutOfBoundsException e) {
+			// TODO: handle exception
+			System.out.println("Takyto lekar v evidencii poistovne neexistuje.");
+		}
+		return null;
 	}
 	
 	public void evidujPacienta(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
@@ -122,16 +104,6 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("evidencia.out"));
 		out.writeObject(this);
 		out.close();
-	}
-	
-	public Lekar vratLekara(int n) {
-		try {
-			return lekari.get(n);
-		} catch (IndexOutOfBoundsException e) {
-			// TODO: handle exception
-			System.out.println("Takyto lekar v evidencii poistovne neexistuje.");
-		}
-		return null;
 	}
 	
 	public void nacitaj() throws ClassNotFoundException, IOException {
@@ -155,14 +127,14 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 	@Override
 	public String zistiNick() {
 		// TODO Auto-generated method stub
-		return this.priudaje.nick;
+		return this.priudaje.zistiNick();
 	}
 
 
 	@Override
 	public String zistiHeslo() {
 		// TODO Auto-generated method stub
-		return this.priudaje.heslo;
+		return this.priudaje.zistiHeslo();
 	}
 
 
