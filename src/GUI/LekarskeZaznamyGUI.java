@@ -2,7 +2,6 @@ package GUI;
 
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import java.io.*;
@@ -73,23 +72,11 @@ public class LekarskeZaznamyGUI extends Stage{
 		border.setBottom(box);
 		
 		vypisPacientov.setOnAction(e->{
-			zoznamPacientov.getItems().clear();
-			for (Pacient pacient : lekar.lekaroviPacienti) {
-				zoznamPacientov.getItems().add(pacient.zistiMeno() +" "+ pacient.vymennyListok);
-			}
-			log.appendText("Zoznam pacientov bol vypisany.\n");
+			lekar.vypisVsetkychPacientov(zoznamPacientov, log);
 		});
 		
 		vydajVymennyListok.setOnAction(e->{
-			if (zoznamPacientov.getSelectionModel().isEmpty()) {
-				log.appendText("Vyber pacienta zo zoznamu.\n");
-			} else {
-				int index = zoznamPacientov.getSelectionModel().getSelectedIndex();
-				Pacient pacient = lekar.vratPacienta(index);
-				lekar.vydajVymennyListok(pacient);
-				log.appendText("Pacientovi "+pacient.zistiMeno()+" bol vydany vymenny listok.\n");
-			}
-			
+			lekar.vydajVymennyListok(zoznamPacientov, log);
 		});
 		
 		uloz.setOnAction(e->{
@@ -102,10 +89,7 @@ public class LekarskeZaznamyGUI extends Stage{
 		});
 		
 		vydajPredpis.setOnAction(e->{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Oops");
-			alert.setContentText("Tato funkcionalita este nebola implementovana.");
-			alert.showAndWait();
+			lekar.vytvorPredpis(zoznamPacientov, log, textPredpisu);
 		});
 		
 		

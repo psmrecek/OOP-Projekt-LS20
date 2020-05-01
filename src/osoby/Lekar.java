@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import poistovna.Predpis;
 
 
@@ -40,27 +42,38 @@ public class Lekar implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobne
 		return null;
 	}
 	
-	public void vydajVymennyListok(Pacient pacient) {
-		pacient.vymennyListok = true;
+	public void vydajVymennyListok(ListView<String> zoznamPacientov, TextArea log) {
+		if (zoznamPacientov.getSelectionModel().isEmpty()) {
+			log.appendText("Vyber pacienta zo zoznamu.\n");
+		} else {
+			int index = zoznamPacientov.getSelectionModel().getSelectedIndex();
+			Pacient pacient = this.vratPacienta(index);
+			pacient.vymennyListok = true;
+			log.appendText("Pacientovi "+pacient.zistiMeno()+" bol vydany vymenny listok.\n");
+			vypisVsetkychPacientov(zoznamPacientov, log);
+		}
 	}
 	
-	public void vytvorPredpis(Pacient pacient) {
-		if (lekaroviPacienti.contains(pacient)) {
-			if (pacient.zistiPohlavie() == 'm') {
-				System.out.println("Pacientovi "+ pacient.zistiMeno() +" bol vydany recept od lekara: " + this.zistiMeno());
-				pacient.predpisy.add(new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), "Predpis vydany pre pacienta " + pacient.zistiMeno()));
-			} else {
-				System.out.println("Pacientke "+ pacient.zistiMeno() +" bol vydany recept od lekara: " + this.zistiMeno());
-				pacient.predpisy.add(new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), "Predpis vydany pre pacientku " + pacient.zistiMeno()));
-			}
-		} 
-//		else {
-//			if (pacient.zistiPohlavie() == 'm') {
-//				System.out.println("Pacient "+ pacient.zistiMeno() +" nie je pacientom lekara "+ this.zistiMeno());
-//			} else {
-//				System.out.println("Pacientka "+ pacient.zistiMeno() +" nie je pacientom lekara "+ this.zistiMeno());
-//			}
-//		}
+	public void vypisVsetkychPacientov(ListView<String> zoznamPacientov, TextArea log) {
+		zoznamPacientov.getItems().clear();
+		for (Pacient pacient : this.lekaroviPacienti) {
+			zoznamPacientov.getItems().add(pacient.zistiMeno() +" "+ pacient.vymennyListok);
+		}
+		log.appendText("Zoznam pacientov bol vypisany/aktualizovany.\n");
+	}
+	
+	public void vytvorPredpis(ListView<String> zoznamPacientov, TextArea log, TextArea textPredpisu) {
+		if (zoznamPacientov.getSelectionModel().isEmpty()) {
+			log.appendText("Vyber pacienta zo zoznamu.\n");
+		} else {
+			int index = zoznamPacientov.getSelectionModel().getSelectedIndex();
+			Pacient pacient = this.vratPacienta(index);
+			String text = textPredpisu.getText();
+			textPredpisu.clear();
+			Lekar lekar = this;
+			pacient.predpisy.add(new Predpis(pacient.zistiMeno(), pacient.zistiRodneCislo(), text, lekar));
+			log.appendText("Pacientovi "+pacient.zistiMeno()+" bol vydany predpis s textom \""+ text + "\"");
+		}			
 	}
 	
 	public Lekar(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {

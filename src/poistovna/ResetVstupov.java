@@ -56,9 +56,9 @@ public class ResetVstupov implements Serializable{
  	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(7));
  	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(8));
  	 		
- 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(6));
- 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(7));
- 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(8));
+// 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(6));
+// 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(7));
+// 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(8));
  	 		
  	  		poistovna.lekari.get(1).evidujPacienta(mojiPacienti.get(3));
  	  		poistovna.lekari.get(1).evidujPacienta(mojiPacienti.get(4));
@@ -86,15 +86,15 @@ public class ResetVstupov implements Serializable{
 		System.out.println("---------------------- Predpisovanie liekov");
 		for (int i = 0; i < 3; i++) {
 			for (int m = 0; m < 3; m++) {
-				poistovna.lekari.get(i).vytvorPredpis(poistovna.lekari.get(i).vratPacienta(m));
+//				poistovna.lekari.get(i).vytvorPredpis(poistovna.lekari.get(i).vratPacienta(m));
 			}
 		}
 		System.out.println("---------------------- Vypis predpisov");
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				Pacient pacient = poistovna.lekari.get(i).vratPacienta(j);
-				if (pacient instanceof Pacient) 
-					System.out.println(pacient.citajPredpis(0));
+//				Pacient pacient = poistovna.lekari.get(i).vratPacienta(j);
+//				if (pacient instanceof Pacient) 
+//					System.out.println(pacient.citajPredpis(0));
 				
 				
 			}

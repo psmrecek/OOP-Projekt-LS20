@@ -16,6 +16,7 @@ public class PrihlasenyPacientGUI extends Stage{
 	private Button uloz = new Button("Ulozit zmeny");
 	private Button vypisAktualnychLekarov = new Button("Vypisat vsetkych lekarov");
 	private Button vymazPole = new Button("Vymazat pole");
+	private Button vypisPredpisy = new Button("Vypis moje predpisy");
 	
 	private TextField meno = new TextField();
 	private TextField adresa = new TextField();
@@ -29,8 +30,10 @@ public class PrihlasenyPacientGUI extends Stage{
 	private Label pohlavieOzn = new Label("Pohlavie pacienta");
 	private Label vypisOzn = new Label("Vypis lekarov");
 	private Label vymennListokOzn = new Label("Vymenny listok");
+	private Label predpisyOzn = new Label("Moje predpisy");
 	
 	private VypisLekarovGUI lwVypisLekarov;
+	private ListView<String> predpisy = new ListView<String>();
 	
 	private ScrollPane skrol = new ScrollPane();
 	
@@ -87,7 +90,9 @@ public class PrihlasenyPacientGUI extends Stage{
 		pane2.add(vymazPole, 1, row++);
 		
 		pane2.add(navsteva, 0, row);
-		pane2.add(uloz, 1, row);
+		pane2.add(uloz, 1, row++);
+		
+		pane2.add(vypisPredpisy, 0, row);
 		
 		int velkostButton = 260;
 		int velkostButton2 = 200;
@@ -95,7 +100,7 @@ public class PrihlasenyPacientGUI extends Stage{
 		vymazPole.setMinWidth(velkostButton2);
 		navsteva.setMinWidth(velkostButton);
 		uloz.setMinWidth(velkostButton2);
-		
+		vypisPredpisy.setMinWidth(velkostButton);
 		
 		GridPane pane3 = new GridPane();
 		pane3.setVgap(10);
@@ -107,6 +112,10 @@ public class PrihlasenyPacientGUI extends Stage{
 		lwVypisLekarov = new VypisLekarovGUI(poistovna);
 		poistovna.pridajSledovatela(lwVypisLekarov);
 		pane3.add(lwVypisLekarov, 0, 1);
+		
+		pane3.add(predpisyOzn, 1, 0);
+		predpisy.setMinWidth(300);
+		pane3.add(predpisy, 1, 1);
 		
 		pane.add(pane2, 0, 0);
 		pane.add(pane3, 1, 0);
@@ -136,6 +145,10 @@ public class PrihlasenyPacientGUI extends Stage{
 			lwVypisLekarov.vymazListView();
 		});
 		
+		vypisPredpisy.setOnAction(e->{
+			pacient.citajPredpisy(predpisy);
+		});
+		
 		
 		uloz.setOnAction(e->{
 			try {
@@ -151,7 +164,7 @@ public class PrihlasenyPacientGUI extends Stage{
 		});
 		
 		
-		setScene(new Scene(skrol, 850, 500));
+		setScene(new Scene(skrol, 1150, 500));
 		show();
 		vypisAktualnychLekarov.requestFocus();
 	}

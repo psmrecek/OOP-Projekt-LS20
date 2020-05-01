@@ -3,6 +3,7 @@ package osoby;
 import java.io.*;
 import java.util.ArrayList;
 
+import javafx.scene.control.ListView;
 import poistovna.*;
 
 public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobneUdaje{
@@ -14,9 +15,10 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	public ArrayList<Predpis> predpisy = new ArrayList<Predpis>();
 	public boolean vymennyListok = false;
 	
-	
-	public String citajPredpis(int index) {
-		return this.predpisy.get(index).zistiMeno() +" ma evidovany predpis s textom: "+ this.predpisy.get(index).zistiText();
+	public void citajPredpisy(ListView<String> predpisyLW) {
+		for (Predpis predpis : this.predpisy) {
+			predpisyLW.getItems().add(predpis.zistiMenoLekara() + ": " + predpis.zistiText());
+		}
 	}
 	
 	public Pacient(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
