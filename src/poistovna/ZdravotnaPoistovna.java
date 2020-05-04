@@ -2,13 +2,16 @@ package poistovna;
 
 import java.util.*;
 import osoby.*;
+
 import java.io.*;
 
 public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje{
 	private static final long serialVersionUID = 0;
 	
-	public List<Lekar> lekari = new ArrayList<>();
-	public List<Pacient> pacienti = new ArrayList<>();
+	private List<Lekarnik> lekarnici = new ArrayList<>();
+	private List<Lekar> lekari = new ArrayList<>();
+	private List<Pacient> pacienti = new ArrayList<>();
+	
 	
 	transient private List<SledovatelLekarov> sledovatelia = new ArrayList<>();
 	
@@ -53,9 +56,20 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		return null;
 	}
 	
+	public Lekarnik autentifikaciaLekarnika(String nick, String heslo) {
+		for (Lekarnik lekarnik : lekarnici) {
+			System.out.println(lekarnik.zistiMeno() +" " + lekarnik.zistiHeslo());
+			if (lekarnik.zistiNick().equals(nick)) {
+				if (lekarnik.zistiHeslo().equals(heslo)) {
+				return lekarnik;
+				}
+			}
+		}
+		return null;
+	}
+	
 	public void evidujLekara(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
 		lekari.add(new Lekar(meno, adresa, rodnec, pohlavie, nick, heslo));
-		
 		System.out.println("Bezny lekar evidovany");
 		upovedomSledovatelov();
 	}
@@ -65,6 +79,11 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		lekari.add(new SpecializovanyLekar(meno, adresa, rodnec, pohlavie, nick, heslo, specializacia));
 		System.out.println("Specializovany lekar evidovany");
 		upovedomSledovatelov();
+	}
+	
+	public void evidujLekarnika(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
+		lekarnici.add(new Lekarnik(meno, adresa, rodnec, pohlavie, nick, heslo));
+		System.out.println("Lekarnik evidovany");
 	}
 	
 	
@@ -113,6 +132,7 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		
 		lekari = nacitanaPoistovna.lekari;
 		pacienti = nacitanaPoistovna.pacienti;
+		lekarnici = nacitanaPoistovna.lekarnici;
 	}
 	
 	// Pomocna metoda na vymazanie suboru s outputom
@@ -121,6 +141,23 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		in.close();
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("evidencia.out"));
 		out.close();
+	}
+	
+	public List<Pacient> vratZoznamPacientov() {
+		return this.pacienti;
+	}
+	
+	public List<Lekar> vratZoznamLekarov(){
+		return this.lekari;
+	}
+	
+	public Pacient najdiPacienta(String meno) {
+		for (Pacient pacient : pacienti) {
+			if (pacient.zistiMeno().equals(meno)) {
+				return pacient;
+			}
+		}
+		return null;
 	}
 
 

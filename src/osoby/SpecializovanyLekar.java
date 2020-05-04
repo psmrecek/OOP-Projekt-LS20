@@ -1,5 +1,9 @@
 package osoby;
 
+import java.util.ArrayList;
+
+import poistovna.*;
+
 public class SpecializovanyLekar extends Lekar{
 	private static final long serialVersionUID = 0;
 	// Pouzite dedenie
@@ -23,16 +27,18 @@ public class SpecializovanyLekar extends Lekar{
 	
 	// Prekonanie metody
 	@Override
-	public boolean evidujPacienta(Pacient pacient) {
-		if(pacient.vymennyListok) {
-			this.lekaroviPacienti.add(pacient);
-			System.out.println(pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno());
-			return true;
-		} else {
-			System.out.println("Pacient nema vymenny listok: " + pacient.zistiMeno() +" "
-					+ pacient.zistiAdresu() +" "+ pacient.zistiRodneCislo() +" "+ pacient.zistiPohlavie());
-			return false;
+	public String evidujPacienta(Pacient pacient) {
+		ArrayList<Listok> vymenneListky = pacient.vratListky();
+		for (Listok listok : vymenneListky) {
+			if(listok.zistiSpecializaciu().contentEquals(this.specializacia)) {
+				this.lekaroviPacienti.add(pacient);
+				pacient.odstranListok(listok);
+				return (pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno() + ".\n");
+			} else {
+				return (pacient.zistiMeno()+" nema vymenny listok k " + this.zistiSpecializaciu() + "-ovi.\n");
+			}
 		}
+		return "Ina chyba";
 	}
 	
 	// Prekonanie metody

@@ -19,6 +19,7 @@ public class LekarskeZaznamyGUI extends Stage{
 	private Label zoznamPacientovOzn = new Label("Zoznam lekarovych pacientov:");
 	private Label vypisy = new Label("Akcie:");
 	private Label textPredpisuOzn = new Label("Text predpisu:");
+	private Label specializaciaOzn = new Label("Vymenny listok k lekarovi:");
 	
 	private TextArea log = new TextArea();
 	private TextArea textPredpisu = new TextArea();
@@ -27,6 +28,7 @@ public class LekarskeZaznamyGUI extends Stage{
 	
 	private ScrollPane skrol = new ScrollPane();
 	
+	private ChoiceBox<String> specializacia = new ChoiceBox<String>();
 	
 	public LekarskeZaznamyGUI(ZdravotnaPoistovna poistovna, Lekar lekar) {
 		
@@ -52,12 +54,23 @@ public class LekarskeZaznamyGUI extends Stage{
 		pane2.add(log, 0, row++);
 		pane2.add(textPredpisuOzn, 0, row++);
 		pane2.add(textPredpisu, 0, row++);
-
 		
 		HBox box = new HBox();
 		box.setSpacing(10);
 		box.setPadding(new Insets(10, 10, 10, 10));
 		box.getChildren().addAll(vypisPacientov, vydajVymennyListok, vydajPredpis, uloz);
+		
+		HBox box2 = new HBox();
+		box2.setSpacing(10);
+		box2.setPadding(new Insets(10, 10, 10, 10));
+		specializacia.getItems().addAll("Oftamolog", "Dietolog", "Neurolog", "Gastroenterolog");
+		box2.getChildren().addAll(specializaciaOzn, specializacia);
+		
+		BorderPane pane5 = new BorderPane();
+		pane5.setPadding(new Insets(10, 10, 10, 10));
+		
+		pane5.setTop(box2);
+		pane5.setBottom(box);
 		
 		GridPane pane4 = new GridPane();
 		pane4.setVgap(10);
@@ -69,14 +82,14 @@ public class LekarskeZaznamyGUI extends Stage{
 		
 		border.setLeft(pane2);
 		border.setRight(pane4);
-		border.setBottom(box);
+		border.setBottom(pane5);
 		
 		vypisPacientov.setOnAction(e->{
 			lekar.vypisVsetkychPacientov(zoznamPacientov, log);
 		});
 		
 		vydajVymennyListok.setOnAction(e->{
-			lekar.vydajVymennyListok(zoznamPacientov, log);
+			lekar.vydajVymennyListok(zoznamPacientov, log, specializacia);
 		});
 		
 		uloz.setOnAction(e->{
@@ -94,7 +107,7 @@ public class LekarskeZaznamyGUI extends Stage{
 		
 		
 		skrol.setContent(border);
-		setScene(new Scene(skrol, 770, 520));
+		setScene(new Scene(skrol, 770, 600));
 		show();
 		vypisPacientov.requestFocus();
 	}

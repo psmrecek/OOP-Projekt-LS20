@@ -8,14 +8,14 @@ public class Predpis implements Serializable{
 	private static final long serialVersionUID = 0;
 	
 	String meno, rodnec, text;
-	Lekar lekar;
+	Lekar autorLekar;
 	
 	public Predpis(String meno, String rodnec, String text, Lekar lekar) {
 		// TODO Auto-generated constructor stub
 		this.meno = meno;
 		this.rodnec = rodnec;
 		this.text = text;
-		this.lekar = lekar;
+		this.autorLekar = lekar;
 	}
 	
 	public String zistiMeno() {
@@ -31,6 +31,6 @@ public class Predpis implements Serializable{
 	}
 	
 	public String zistiMenoLekara() {
-		return this.lekar.zistiMeno();
+		return this.autorLekar.zistiMeno();
 	}
 }

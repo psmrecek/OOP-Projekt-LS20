@@ -1,11 +1,9 @@
 package poistovna;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
-import osoby.Lekar;
-import osoby.Pacient;
+import osoby.*;
 
 public class ResetVstupov implements Serializable{
 	private static final long serialVersionUID = 0;
@@ -27,8 +25,7 @@ public class ResetVstupov implements Serializable{
   				// TODO Auto-generated catch block
   				e1.printStackTrace();
   			}
-  	  		
-  			List<Pacient> mojiPacienti = new ArrayList<>();
+
   			
   			poistovna.evidujPacienta("Dorota Chripkova", "Osloboditelov 4 Trencin", "025204/5464", 'Z', "d", "a");
   			poistovna.evidujPacienta("Emilia Chripkova", "Osloboditelov 4 Trencin", "965608/5076", 'Z', "e", "a");
@@ -41,32 +38,37 @@ public class ResetVstupov implements Serializable{
   			poistovna.evidujPacienta("Ladislav Poloslepy", "Osloboditelov 6 Trencin", "930618/6461", 'M', "l", "a");
   			
   			
-  			for (Pacient pacient : poistovna.pacienti) {
-				mojiPacienti.add(pacient);
-			}
+  			List<Pacient> mojiPacienti = poistovna.vratZoznamPacientov();
   			
   	  		poistovna.evidujLekara("Arnost Vseobecny", "1. Maja 1 Trencin", "000312/6871", 'M', "arnost", "aaa");
  			poistovna.evidujLekara("Beata Vseobecna", "1. Maja 2 Trencin", "945728/5343", 'Z', "beata", "bbb");
  			poistovna.evidujLekara("Cyril Specialny", "1. Maja 3 Trencin ", "990113/8863", 'M' , "cyril", "ccc", "Oftamolog");
+ 			poistovna.evidujLekara("Zoltan Vybusny", "1. Maja 4 Trencin ", "654123/9874", 'M' , "zoltan", "zzz", "Neurolog");
  			
- 	  		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(0));
- 	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(1));
- 	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(2));
- 	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(6));
- 	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(7));
- 	 		poistovna.lekari.get(0).evidujPacienta(mojiPacienti.get(8));
+
+ 			
+ 	  		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(0));
+ 	 		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(1));
+ 	 		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(2));
+ 	 		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(6));
+ 	 		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(7));
+ 	 		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(8));
  	 		
 // 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(6));
 // 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(7));
 // 	 		poistovna.lekari.get(0).vydajVymennyListok(mojiPacienti.get(8));
  	 		
- 	  		poistovna.lekari.get(1).evidujPacienta(mojiPacienti.get(3));
- 	  		poistovna.lekari.get(1).evidujPacienta(mojiPacienti.get(4));
- 	  		poistovna.lekari.get(1).evidujPacienta(mojiPacienti.get(5));
+ 	  		poistovna.vratLekara(0).evidujPacienta(mojiPacienti.get(3));
+ 	  		poistovna.vratLekara(1).evidujPacienta(mojiPacienti.get(4));
+ 	  		poistovna.vratLekara(1).evidujPacienta(mojiPacienti.get(5));
  	  		
- 			poistovna.lekari.get(2).evidujPacienta(mojiPacienti.get(6));
- 	  		poistovna.lekari.get(2).evidujPacienta(mojiPacienti.get(7));
- 	  		poistovna.lekari.get(2).evidujPacienta(mojiPacienti.get(8));
+ 			poistovna.vratLekara(2).evidujPacienta(mojiPacienti.get(6));
+ 	  		poistovna.vratLekara(2).evidujPacienta(mojiPacienti.get(7));
+ 	  		poistovna.vratLekara(2).evidujPacienta(mojiPacienti.get(8));
+ 	  		
+ 			poistovna.evidujLekarnika("Tomas Maly", "1. Maja 5 Trencin", "562314/1456", 'M', "tomas", "ttt");
+ 			poistovna.evidujLekarnika("Ulrich Velky", "1. Maja 6 Trencin", "562314/1456", 'M', "ulrich", "uuu");
+ 			
 		}
   		else {
   	  		try {
@@ -76,12 +78,12 @@ public class ResetVstupov implements Serializable{
   				e1.printStackTrace();
   			}
 		}
-  		System.out.println("---------------------- Vypis lekarov");
-		poistovna.vypisLekarov();
-		for (Lekar l : poistovna.lekari) {
-			System.out.println("---------------------- Vypis pacientov lekara");
-			l.vypisPacientov();
-		}
+//  		System.out.println("---------------------- Vypis lekarov");
+//		poistovna.vypisLekarov();
+//		for (Lekar l : poistovna.lekari) {
+//			System.out.println("---------------------- Vypis pacientov lekara");
+//			l.vypisPacientov();
+//		}
 		
 		System.out.println("---------------------- Predpisovanie liekov");
 		for (int i = 0; i < 3; i++) {
@@ -102,6 +104,7 @@ public class ResetVstupov implements Serializable{
 		
 		try {
 			poistovna.uloz();
+			System.out.println("Zaznamy boli serializovane");
 		} catch (ClassNotFoundException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

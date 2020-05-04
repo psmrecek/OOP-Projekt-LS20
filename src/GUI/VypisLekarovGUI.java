@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import osoby.*;
 import poistovna.*;
 
-public class VypisLekarovGUI extends ListView<String> implements SledovatelLekarov{
+public class VypisLekarovGUI extends ListView<String> implements SledovatelLekarov{					// Element GUI aplikujuci navrhovy vzor Observer
 	private ZdravotnaPoistovna poistovna;
 	public List<Lekar> lekari = new ArrayList<>();
 	
@@ -19,7 +19,7 @@ public class VypisLekarovGUI extends ListView<String> implements SledovatelLekar
 	@Override
 	public void upovedom() {
 		// TODO Auto-generated method stub
-		lekari = poistovna.lekari;
+		lekari = poistovna.vratZoznamLekarov();
 		this.getItems().clear();
 		for (Lekar lekar : lekari) {
 			this.getItems().add(lekar.zistiMeno() +" - "+ lekar.zistiSpecializaciu());

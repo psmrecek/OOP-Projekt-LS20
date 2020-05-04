@@ -12,22 +12,64 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	// Agregacia a enkapsulacia (udaje pristupne len cez metodu)
 	private OsobneUdaje osudaje;
 	private PrihlasovacieUdaje priudaje;
-	public ArrayList<Predpis> predpisy = new ArrayList<Predpis>();
-	public boolean vymennyListok = false;
-	
-	public void citajPredpisy(ListView<String> predpisyLW) {
-		for (Predpis predpis : this.predpisy) {
-			predpisyLW.getItems().add(predpis.zistiMenoLekara() + ": " + predpis.zistiText());
-		}
-	}
+	private ArrayList<Predpis> predpisy = new ArrayList<Predpis>();
+	private ArrayList<Listok> vymenneListky = new ArrayList<Listok>();
+	private boolean uzMaVseobecnehoLekara = false;
+//	public boolean vymennyListok = false;
 	
 	public Pacient(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
 		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
 		nastavPrihlasovacieUdaje(nick, heslo);
 	}
 	
-	public void pridajVymennyListok(boolean b) {
-		this.vymennyListok = b;
+	public void citajPredpisy(ListView<String> predpisyLW) {
+		predpisyLW.getItems().clear();
+		for (Predpis predpis : this.predpisy) {
+			predpisyLW.getItems().add(predpis.zistiMenoLekara() + ": " + predpis.zistiText());
+		}
+	}
+	
+	public void citajListky(ListView<String> vymenneListky) {
+		vymenneListky.getItems().clear();
+		for (Listok listok : this.vymenneListky) {
+			vymenneListky.getItems().add("Vymenny listok k " + listok.zistiText()+"-ovi");
+		}
+	}
+	
+	public ArrayList<Predpis> vratPredpisy() {
+		return this.predpisy;
+	}
+	
+	public ArrayList<Listok> vratListky() {
+		return this.vymenneListky;
+	}
+	
+	public void pridajListok(Listok listok) {
+		this.vymenneListky.add(listok);
+	}
+	
+	public void pridajPredpis(Predpis predpis) {
+		this.predpisy.add(predpis);
+	}
+	
+	public void odstranListok(Listok listok) {
+		this.vymenneListky.remove(listok);
+	}
+	
+	public void odstranPredpis(Predpis predpis) {
+		this.predpisy.remove(predpis);
+	}
+	
+	public void odstranPredpis(int index) {
+		this.predpisy.remove(index);
+	}
+	
+	public void registrovanyPacientVseobecnymLekarom(boolean b) {
+		this.uzMaVseobecnehoLekara = b;
+	}
+	
+	public boolean skontrolujVseobecnehoLekara() {
+		return this.uzMaVseobecnehoLekara;
 	}
 
 	@Override

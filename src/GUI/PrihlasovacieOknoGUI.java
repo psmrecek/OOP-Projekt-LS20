@@ -21,6 +21,7 @@ public class PrihlasovacieOknoGUI extends Application {
 	
 	private RadioButton po = new RadioButton("Poistovna");
 	private RadioButton le = new RadioButton("Lekar");
+	private RadioButton lekarnik = new RadioButton("Lekarnik");
 	private RadioButton pa = new RadioButton("Pacient");
 	final ToggleGroup gr = new ToggleGroup();
 	
@@ -66,8 +67,9 @@ public class PrihlasovacieOknoGUI extends Application {
 		po.setToggleGroup(gr);
 		po.setSelected(true);
 		le.setToggleGroup(gr);
+		lekarnik.setToggleGroup(gr);
 		pa.setToggleGroup(gr);
-		flowp.getChildren().addAll(po, le, pa);
+		flowp.getChildren().addAll(po, le, lekarnik, pa);
 		
 		pane2.add(prihlasenie, 0, 0);
 		pane2.add(registracia, 1, 0);
@@ -84,7 +86,13 @@ public class PrihlasovacieOknoGUI extends Application {
 				if (lekar != null) {
 					System.out.println("Prihlaseny ako lekar");
 					new LekarskeZaznamyGUI(poistovna, lekar);
-				} 
+				}
+			} else if (lekarnik.isSelected()) {
+				Lekarnik lekarnik = poistovna.autentifikaciaLekarnika(nick.getText(), heslo.getText());
+				if (lekarnik != null) {
+					System.out.println("Prihlaseny ako lekarnik");
+					new PrihlasenyLekarnik(poistovna, lekarnik);
+				}
 			} else {
 				Pacient pacient = poistovna.autentifikaciaPacienta(nick.getText(), heslo.getText());
 				if (pacient != null) {
