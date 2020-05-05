@@ -19,6 +19,10 @@ public class Predpis implements Serializable{
 		this.autorLekar = lekar;
 	}
 	
+	public String citaniePredpisu() {
+		return ("Predpis lieku: " + this.zistiMenoLekara() + " - " + this.zistiText()); 
+	}
+	
 	public boolean overPlatnost() {
 		Random random = new Random();
 		return random.nextBoolean();

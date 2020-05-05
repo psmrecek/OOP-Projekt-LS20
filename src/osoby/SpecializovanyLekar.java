@@ -23,7 +23,7 @@ public class SpecializovanyLekar extends Lekar{
 	public String evidujPacienta(Pacient pacient) {
 		ArrayList<Listok> vymenneListky = pacient.vratListky();
 		for (Listok listok : vymenneListky) {
-			System.out.println(listok.zistiText());
+//			System.out.println(listok.zistiText());
 			if(listok.zistiSpecializaciu().contentEquals(this.specializacia)) {
 				this.lekaroviPacienti.add(pacient);
 				pacient.odstranListok(listok);

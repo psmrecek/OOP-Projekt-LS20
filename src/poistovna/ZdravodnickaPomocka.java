@@ -16,4 +16,9 @@ public class ZdravodnickaPomocka extends Predpis {
 	public String zistiTyp() {
 		return this.typPomocky;
 	}
+	
+	@Override
+	public String citaniePredpisu() {
+		return ("Zdravotnicka pomocka: " + this.zistiMenoLekara() + " - " + this.zistiTyp() + " - " + this.zistiText()); 
+	}
 }

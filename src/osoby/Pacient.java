@@ -23,7 +23,7 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	public void citajPredpisy(ListView<String> predpisyLW) {
 		predpisyLW.getItems().clear();
 		for (Predpis predpis : this.predpisy) {
-			predpisyLW.getItems().add(predpis.zistiMenoLekara() + ": " + predpis.zistiText());
+			predpisyLW.getItems().add(predpis.citaniePredpisu());
 		}
 	}
 	

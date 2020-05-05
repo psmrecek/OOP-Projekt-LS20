@@ -26,7 +26,7 @@ public class Lekar extends Lekarnik{
 		if (!pacient.skontrolujVseobecnehoLekara()) {
 			this.lekaroviPacienti.add(pacient);
 			pacient.registrovanyPacientVseobecnymLekarom(true);
-			return (pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno() + "\n.");
+			return (pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno() + ".\n");
 		} else {
 			return (pacient.zistiMeno()+" uz ma vseobecneho lekara. Nie je mozne navstevovat 2 vseobecnych lekarov sucasne.\n");
 		}

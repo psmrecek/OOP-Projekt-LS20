@@ -19,28 +19,54 @@ public class Lekarnik implements Serializable, ZistiPrihlasovacieUdaje, ZistiOso
 	
 	public String nacitajPredpisy(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy) {
 		Pacient pacient = poistovna.najdiPacienta(meno);
+		
+		Sprava sprava = text -> (meno + ": " + text + "\n");
+		
 		if (pacient != null) {
 			ArrayList<Predpis> pacientovePredpisy = pacient.vratPredpisy();
 			predpisy.getItems().clear();
 			for (Predpis predpis : pacientovePredpisy) {
-				predpisy.getItems().add(predpis.zistiText() +" predpisal " + predpis.zistiMenoLekara());
+				predpisy.getItems().add(predpis.citaniePredpisu());
 			}
-			return (meno+": Recepty boli vypisane.\n");
+//			return (meno+": Predpisy boli vypisane.\n");
+			return sprava.pridaj("Predpisy boli vypisane.");
 		} else {
-			return (meno + " sa v evidencii nenachadza.\n");
+			return sprava.pridaj("Nie je v evidencii.");
 		}
 	}
 	
 	public String vydatPredpis(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy) {
 		Pacient pacient = poistovna.najdiPacienta(meno);
+		Sprava sprava = text -> ("Vydavanie predpisu: " + text + "\n");
 		if (predpisy.getSelectionModel().isEmpty()) {
-			return ("Vyber predpis zo zoznamu.\n");
+			return sprava.pridaj("Zo zoznamu nebol vybraty ziaden predpis.");
 		} else {
 			int index = predpisy.getSelectionModel().getSelectedIndex();
 			
-			String sprava = "Predpis \"" + predpisy.getSelectionModel().getSelectedItem() + "\" bol vydany.\n";
+			class NovaNit extends Thread{											// Vnorena trieda
+				
+			    public void run() 
+			    { 
+			    	for (int j = 0; j < 100000; j++) {
+			    		System.out.println("Prebieha hladanie lieku " + j);
+					}
+			    	
+			    }
+			    
+			}
+			
+			NovaNit nit = new NovaNit();
+			nit.start();
+			try {
+				nit.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String text = sprava.pridaj(("Predpis \"" + predpisy.getSelectionModel().getSelectedItem() + "\" bol vydany."));
 			pacient.odstranPredpis(index);
-			return (sprava + this.nacitajPredpisy(poistovna, meno, predpisy));
+			return (text + this.nacitajPredpisy(poistovna, meno, predpisy));
 		}	
 	}
 
