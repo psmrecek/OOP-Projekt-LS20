@@ -126,13 +126,8 @@ public class ManazerPoistovneGUI extends Stage{
 		skrol.setContent(pane);
 		
 		pridajLekara.setOnAction(e->{
-			if (specializaciaAktivna.isSelected()) {
-				poistovna.evidujLekara(meno.getText(), adresa.getText(), rodnec.getText(), 
+			poistovna.urciTypLekara(specializaciaAktivna.isSelected(), meno.getText(), adresa.getText(), rodnec.getText(), 
 						pohlavie.getValue().charAt(0), nick.getText(), heslo.getText(), specializacia.getValue());
-			} else {
-				poistovna.evidujLekara(meno.getText(), adresa.getText(), rodnec.getText(), 
-						pohlavie.getValue().charAt(0), nick.getText(), heslo.getText());
-			}
 		});
 		
 		reset.setOnAction(e->{

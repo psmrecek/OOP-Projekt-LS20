@@ -9,13 +9,11 @@ import poistovna.*;
 public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsobneUdaje{
 	private static final long serialVersionUID = 0;
 	
-	// Agregacia a enkapsulacia (udaje pristupne len cez metodu)
 	private OsobneUdaje osudaje;
 	private PrihlasovacieUdaje priudaje;
-	private ArrayList<Predpis> predpisy = new ArrayList<Predpis>();
-	private ArrayList<Listok> vymenneListky = new ArrayList<Listok>();
+	private ArrayList<Predpis> predpisy = new ArrayList<>();
+	private ArrayList<Listok> vymenneListky = new ArrayList<>();
 	private boolean uzMaVseobecnehoLekara = false;
-//	public boolean vymennyListok = false;
 	
 	public Pacient(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
 		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
@@ -60,6 +58,7 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 		this.predpisy.remove(predpis);
 	}
 	
+	// Pretazenie
 	public void odstranPredpis(int index) {
 		this.predpisy.remove(index);
 	}

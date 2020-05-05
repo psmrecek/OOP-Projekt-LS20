@@ -6,6 +6,7 @@ import javafx.application.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import osoby.*;
@@ -77,28 +78,68 @@ public class PrihlasovacieOknoGUI extends Application {
 		flowp.getChildren().add(pane2);
 		prihlasenie.setOnAction(e-> {
 			if (po.isSelected()) {
-				if (poistovna.autentifikaciaPoistovne(nick.getText(), heslo.getText())) {
-					System.out.println("Prihlaseny ako poistovna");
-					new ManazerPoistovneGUI(poistovna);
+				try {
+					if (poistovna.autentifikaciaPoistovne(nick.getText(), heslo.getText())) {
+//						System.out.println("Prihlaseny ako poistovna");
+						new ManazerPoistovneGUI(poistovna);
+					}
+				} catch (NenajdenyUzivatelException ex) {
+					// TODO: handle exception
+//					System.out.println("Zachytil som vynimku.");
+					Alert a = new Alert(AlertType.ERROR);
+					a.setTitle("Chyba");
+					a.setContentText("Prihlasovacie udaje pre manazera poistovne nie su spravne.");
+					a.showAndWait();
 				}
 			} else if (le.isSelected()) {
-				Lekar lekar = poistovna.autentifikaciaLekara(nick.getText(), heslo.getText());
-				if (lekar != null) {
-					System.out.println("Prihlaseny ako lekar");
-					new LekarskeZaznamyGUI(poistovna, lekar);
+				try {
+					Lekar lekar = poistovna.autentifikaciaLekara(nick.getText(), heslo.getText());
+					if (lekar != null) {
+//						System.out.println("Prihlaseny ako lekar");
+						new LekarskeZaznamyGUI(poistovna, lekar);
+					}
+				} catch (NenajdenyUzivatelException ex) {
+					// TODO Auto-generated catch block
+//					System.out.println("Zachytil som vynimku.");
+					Alert a = new Alert(AlertType.ERROR);
+					a.setTitle("Chyba");
+					a.setContentText("Lekar so zadanymi prihlasovacimi udajmi sa v evidencii nenachadza.");
+					a.showAndWait();
 				}
+
 			} else if (lekarnik.isSelected()) {
-				Lekarnik lekarnik = poistovna.autentifikaciaLekarnika(nick.getText(), heslo.getText());
-				if (lekarnik != null) {
-					System.out.println("Prihlaseny ako lekarnik");
-					new PrihlasenyLekarnik(poistovna, lekarnik);
+				Lekarnik lekarnik;
+				try {
+					lekarnik = poistovna.autentifikaciaLekarnika(nick.getText(), heslo.getText());
+					if (lekarnik != null) {
+//						System.out.println("Prihlaseny ako lekarnik");
+						new PrihlasenyLekarnikGUI(poistovna, lekarnik);
+					}
+				} catch (NenajdenyUzivatelException ex) {
+					// TODO Auto-generated catch block
+//					System.out.println("Zachytil som vynimku.");
+					Alert a = new Alert(AlertType.ERROR);
+					a.setTitle("Chyba");
+					a.setContentText("Lekarnik so zadanymi prihlasovacimi udajmi sa v evidencii nenachadza.");
+					a.showAndWait();
 				}
+
 			} else {
-				Pacient pacient = poistovna.autentifikaciaPacienta(nick.getText(), heslo.getText());
-				if (pacient != null) {
-					System.out.println("Prihlaseny ako pacient");
-					new PrihlasenyPacientGUI(poistovna, pacient);
+				try {
+					Pacient pacient = poistovna.autentifikaciaPacienta(nick.getText(), heslo.getText());
+					if (pacient != null) {
+//						System.out.println("Prihlaseny ako pacient");
+						new PrihlasenyPacientGUI(poistovna, pacient);
+					}
+				} catch (NenajdenyUzivatelException ex) {
+					// TODO: handle exception
+//					System.out.println("Zachytil som vynimku.");
+					Alert a = new Alert(AlertType.ERROR);
+					a.setTitle("Chyba");
+					a.setContentText("Pacient so zadanymi prihlasovacimi udajmi sa v evidencii nenachadza.");
+					a.showAndWait();
 				}
+
 			}
 		});
 		

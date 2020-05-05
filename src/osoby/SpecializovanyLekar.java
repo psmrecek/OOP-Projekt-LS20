@@ -2,6 +2,8 @@ package osoby;
 
 import java.util.ArrayList;
 
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import poistovna.*;
 
 public class SpecializovanyLekar extends Lekar{
@@ -16,32 +18,40 @@ public class SpecializovanyLekar extends Lekar{
 		this.specializacia = specializacia;
 	}
 	
-	// Prekonanie metody
-	@Override
-	public void vypisPacientov() {
-		for (Pacient pacient2 : this.lekaroviPacienti) {
-			System.out.println("Evidovany pacient lekara '" + this.osudaje.meno + "' - "+ this.specializacia +": " + pacient2.zistiMeno() +" "
-								+ pacient2.zistiAdresu() +" "+ pacient2.zistiRodneCislo() +" "+ pacient2.zistiPohlavie());
-		}
-	}
-	
-	// Prekonanie metody
+	// Prekonanie metody, pacient je evidovany iba ak ma vymenny listok pre spravneho specialistu
 	@Override
 	public String evidujPacienta(Pacient pacient) {
 		ArrayList<Listok> vymenneListky = pacient.vratListky();
 		for (Listok listok : vymenneListky) {
+			System.out.println(listok.zistiText());
 			if(listok.zistiSpecializaciu().contentEquals(this.specializacia)) {
 				this.lekaroviPacienti.add(pacient);
 				pacient.odstranListok(listok);
 				return (pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno() + ".\n");
-			} else {
-				return (pacient.zistiMeno()+" nema vymenny listok k " + this.zistiSpecializaciu() + "-ovi.\n");
-			}
+			} 
 		}
-		return "Ina chyba";
+		return (pacient.zistiMeno()+" nema vymenny listok k " + this.zistiSpecializaciu() + "-ovi.\n");
 	}
 	
-	// Prekonanie metody
+	public void vytvorPomocku(ListView<String> zoznamPacientov, TextArea log, TextArea textPredpisu, String typPomocky) {
+		if (zoznamPacientov.getSelectionModel().isEmpty()) {
+			log.appendText("Vyber pacienta zo zoznamu.\n");
+		} else {
+			int index = zoznamPacientov.getSelectionModel().getSelectedIndex();
+			Pacient pacient = this.vratPacienta(index);
+			String text = textPredpisu.getText();
+			textPredpisu.clear();
+			Lekar lekar = this;
+			pacient.pridajPredpis(new ZdravodnickaPomocka(pacient.zistiMeno(), pacient.zistiRodneCislo(), text, lekar, typPomocky));
+					// Do predpisov sa nepridava predpis ako od vseobecneho lekara, ale zdravotna pomocka
+			String oslovenie = "Pacientovi ";
+			if (pacient.zistiPohlavie() == 'Z') {
+				oslovenie = "Pacientke ";
+			}
+			log.appendText(oslovenie + pacient.zistiMeno()+" bol vydany predpis na \"" + typPomocky + "\" s textom \""+ text + "\"\n");
+		}			
+	}
+	
 	@Override
 	public String zistiSpecializaciu() {
 		return this.specializacia;

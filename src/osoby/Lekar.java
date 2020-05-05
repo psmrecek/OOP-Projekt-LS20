@@ -12,12 +12,15 @@ import poistovna.*;
 public class Lekar extends Lekarnik{
 	private static final long serialVersionUID = 0;
 	
-// Agregacia a enkapsulacia (udaje pristupne len cez metodu)
-//	protected OsobneUdaje osudaje;
-//	protected PrihlasovacieUdaje priudaje;
-	
 	// List pacientov v lekarovej evidencii
 	protected List<Pacient> lekaroviPacienti = new ArrayList<>();
+	
+//	protected String specializacia;
+	
+	public Lekar(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
+		super(meno, adresa, rodnec, pohlavie, nick, heslo);
+//		this.specializacia = "Vseobecny lekar";
+	}
 	
 	public String evidujPacienta(Pacient pacient) {
 		if (!pacient.skontrolujVseobecnehoLekara()) {
@@ -26,13 +29,6 @@ public class Lekar extends Lekarnik{
 			return (pacient.zistiMeno()+" sa stal pacientom lekara "+this.zistiMeno() + "\n.");
 		} else {
 			return (pacient.zistiMeno()+" uz ma vseobecneho lekara. Nie je mozne navstevovat 2 vseobecnych lekarov sucasne.\n");
-		}
-	}
-	
-	public void vypisPacientov() {
-		for (Pacient pacient2 : this.lekaroviPacienti) {
-			System.out.println("Evidovany pacient lekara '" + this.zistiMeno() + "': " + pacient2.zistiMeno() +" "
-								+ pacient2.zistiAdresu() +" "+ pacient2.zistiRodneCislo() +" "+ pacient2.zistiPohlavie());
 		}
 	}
 	
@@ -91,61 +87,7 @@ public class Lekar extends Lekarnik{
 		}			
 	}
 	
-	public Lekar(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
-		super(meno, adresa, rodnec, pohlavie, nick, heslo);
-//		osudaje = new OsobneUdaje(meno, adresa, rodnec, pohlavie);
-//		nastavPrihlasovacieUdaje(nick, heslo);
-	}
-	
 	public String zistiSpecializaciu() {
 		return "Vseobecny lekar";
 	}
-
-	@Override
-	public String zistiNick() {
-		// TODO Auto-generated method stub
-		return this.priudaje.zistiNick();
-	}
-
-	@Override
-	public String zistiHeslo() {
-		// TODO Auto-generated method stub
-		return this.priudaje.zistiHeslo();
-	}
-	
-	@Override
-	public void nastavPrihlasovacieUdaje(String nick, String heslo) {
-		// TODO Auto-generated method stub
-		priudaje = new PrihlasovacieUdaje(nick, heslo);
-	}
-	
-	@Override
-	public String zistiMeno() {
-		// TODO Auto-generated method stub
-		return this.osudaje.meno;
-	}
-
-	@Override
-	public String zistiAdresu() {
-		// TODO Auto-generated method stub
-		return this.osudaje.adresa;
-	}
-
-	@Override
-	public String zistiRodneCislo() {
-		// TODO Auto-generated method stub
-		return this.osudaje.rodnec;
-	}
-
-	@Override
-	public char zistiPohlavie() {
-		// TODO Auto-generated method stub
-		return this.osudaje.pohlavie;
-	}
-
-
-
-
-	
-
 }

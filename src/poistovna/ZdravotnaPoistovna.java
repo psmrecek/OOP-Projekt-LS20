@@ -12,29 +12,33 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 	private List<Lekar> lekari = new ArrayList<>();
 	private List<Pacient> pacienti = new ArrayList<>();
 	
-	
 	transient private List<SledovatelLekarov> sledovatelia = new ArrayList<>();
+	
+	private PrihlasovacieUdaje priudaje;
+	
+	public ZdravotnaPoistovna() {
+		this.priudaje = new PrihlasovacieUdaje("admin", "123");
+	}
 	
 	public void pridajSledovatela(SledovatelLekarov sledovatelStavu) {
 		sledovatelia.add(sledovatelStavu);
 	}
+	
 	public void upovedomSledovatelov() {
 		for (SledovatelLekarov s : sledovatelia)
 			s.upovedom();
 	}
 	
-	private PrihlasovacieUdaje priudaje = new PrihlasovacieUdaje("admin", "123");
-	
-	public boolean autentifikaciaPoistovne(String nick, String heslo) {
+	public boolean autentifikaciaPoistovne(String nick, String heslo) throws NenajdenyUzivatelException {
 		if (nick.equals(priudaje.zistiNick())) {
 			if (heslo.equals(priudaje.zistiHeslo())) {
 				return true;
 			}
 		}
-		return false;
+		throw new NenajdenyUzivatelException();
 	}
 	
-	public Lekar autentifikaciaLekara(String nick, String heslo) {
+	public Lekar autentifikaciaLekara(String nick, String heslo) throws NenajdenyUzivatelException {
 		for (Lekar lekar : lekari) {
 			if (lekar.zistiNick().equals(nick)) {
 				if (lekar.zistiHeslo().equals(heslo)) {
@@ -42,10 +46,10 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 				}
 			}
 		}
-		return null;
+		throw new NenajdenyUzivatelException();
 	}
 	
-	public Pacient autentifikaciaPacienta(String nick, String heslo) {
+	public Pacient autentifikaciaPacienta(String nick, String heslo) throws NenajdenyUzivatelException {
 		for (Pacient pacient : pacienti) {
 			if (pacient.zistiNick().equals(nick)) {
 				if (pacient.zistiHeslo().equals(heslo)) {
@@ -53,31 +57,38 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 				}
 			}
 		}
-		return null;
+		throw new NenajdenyUzivatelException();
 	}
 	
-	public Lekarnik autentifikaciaLekarnika(String nick, String heslo) {
+	public Lekarnik autentifikaciaLekarnika(String nick, String heslo) throws NenajdenyUzivatelException {
 		for (Lekarnik lekarnik : lekarnici) {
-			System.out.println(lekarnik.zistiMeno() +" " + lekarnik.zistiHeslo());
 			if (lekarnik.zistiNick().equals(nick)) {
 				if (lekarnik.zistiHeslo().equals(heslo)) {
 				return lekarnik;
 				}
 			}
 		}
-		return null;
+		throw new NenajdenyUzivatelException();
+	}
+	
+	public void urciTypLekara(boolean b, String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo, String specializacia) {
+		if (b) {
+			this.evidujLekara(meno, adresa, rodnec, pohlavie, nick, heslo, specializacia);
+		} else {
+			this.evidujLekara(meno, adresa, rodnec, pohlavie, nick, heslo);
+		}
 	}
 	
 	public void evidujLekara(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
 		lekari.add(new Lekar(meno, adresa, rodnec, pohlavie, nick, heslo));
-		System.out.println("Bezny lekar evidovany");
+//		System.out.println("Vseobecny lekar evidovany");
 		upovedomSledovatelov();
 	}
 	
 	// Pretazenie
 	public void evidujLekara(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo, String specializacia) {
 		lekari.add(new SpecializovanyLekar(meno, adresa, rodnec, pohlavie, nick, heslo, specializacia));
-		System.out.println("Specializovany lekar evidovany");
+//		System.out.println("Specializovany lekar evidovany");
 		upovedomSledovatelov();
 	}
 	
@@ -86,21 +97,12 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		System.out.println("Lekarnik evidovany");
 	}
 	
+	public void evidujPacienta(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
+		pacienti.add(new Pacient(meno, adresa, rodnec, pohlavie, nick, heslo));
+		System.out.println("Pacient zaevidovany");
+	}
 	
 	public void vypisLekarov() {
-//		for (Lekar lekar2 : lekari) {
-//			// Kontrola, ktorej triedy je instancia lekar
-//			if (lekar2 instanceof SpecializovanyLekar) {
-//				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
-//						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie() + " " + ((SpecializovanyLekar) lekar2).specializacia + " " + 
-//						lekar2.zistiNick() + " " + lekar2.zistiHeslo());
-//			}
-//			else {
-//				System.out.println("Zazmluvneny lekar: " + lekar2.zistiMeno() +" "+ lekar2.zistiAdresu() +" "
-//						+ lekar2.zistiRodneCislo() +" "+ lekar2.zistiPohlavie()+ " " + 
-//								lekar2.zistiNick() + " " + lekar2.zistiHeslo());
-//			}
-//		}
 		upovedomSledovatelov();
 	}
 	
@@ -114,9 +116,21 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		return null;
 	}
 	
-	public void evidujPacienta(String meno, String adresa, String rodnec, char pohlavie, String nick, String heslo) {
-		pacienti.add(new Pacient(meno, adresa, rodnec, pohlavie, nick, heslo));
-		System.out.println("Pacient zaevidovany");
+	public Pacient najdiPacienta(String meno) {
+		for (Pacient pacient : pacienti) {
+			if (pacient.zistiMeno().equals(meno)) {
+				return pacient;
+			}
+		}
+		return null;
+	}
+	
+	public List<Pacient> vratZoznamPacientov() {
+		return this.pacienti;
+	}
+	
+	public List<Lekar> vratZoznamLekarov(){
+		return this.lekari;
 	}
 
 	public void uloz() throws ClassNotFoundException, IOException {
@@ -143,24 +157,6 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 		out.close();
 	}
 	
-	public List<Pacient> vratZoznamPacientov() {
-		return this.pacienti;
-	}
-	
-	public List<Lekar> vratZoznamLekarov(){
-		return this.lekari;
-	}
-	
-	public Pacient najdiPacienta(String meno) {
-		for (Pacient pacient : pacienti) {
-			if (pacient.zistiMeno().equals(meno)) {
-				return pacient;
-			}
-		}
-		return null;
-	}
-
-
 	@Override
 	public String zistiNick() {
 		// TODO Auto-generated method stub

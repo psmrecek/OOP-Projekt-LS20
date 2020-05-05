@@ -12,14 +12,18 @@ import poistovna.*;
 public class LekarskeZaznamyGUI extends Stage{
 	
 	private Button vypisPacientov = new Button("Vypisat zoznam pacientov");
-	private Button vydajVymennyListok = new Button("Vydat pacientovi vymenny listok");
+	private Button vydajVymennyListok = new Button("Vydat vymenny listok");
 	private Button uloz = new Button("Ulozit zmeny");
 	private Button vydajPredpis = new Button("Vydat predpis");
+	private Button vydajPomocku = new Button("Vydat pomocku");
 	
 	private Label zoznamPacientovOzn = new Label("Zoznam lekarovych pacientov:");
 	private Label vypisy = new Label("Akcie:");
 	private Label textPredpisuOzn = new Label("Text predpisu:");
 	private Label specializaciaOzn = new Label("Vymenny listok k lekarovi:");
+	private Label pomockaOzn = new Label("Typ zdravnotnickej pomocky:");
+	
+	private TextField typPomocky = new TextField();
 	
 	private TextArea log = new TextArea();
 	private TextArea textPredpisu = new TextArea();
@@ -80,16 +84,29 @@ public class LekarskeZaznamyGUI extends Stage{
 		zoznamPacientov.setPrefHeight(height + 40);
 		pane4.add(zoznamPacientov, 0, 1);
 		
+		if (lekar instanceof SpecializovanyLekar) {				// Toto sem nepatri
+			
+			box2.getChildren().addAll(pomockaOzn, typPomocky);
+			box.getChildren().add(vydajPomocku);
+		}
+		
 		border.setLeft(pane2);
 		border.setRight(pane4);
 		border.setBottom(pane5);
 		
+
 		vypisPacientov.setOnAction(e->{
 			lekar.vypisVsetkychPacientov(zoznamPacientov, log);
 		});
 		
 		vydajVymennyListok.setOnAction(e->{
 			lekar.vydajVymennyListok(zoznamPacientov, log, specializacia);
+		});
+		
+		vydajPomocku.setOnAction(e->{
+			SpecializovanyLekar specialista = (SpecializovanyLekar) lekar;
+			specialista.vytvorPomocku(zoznamPacientov, log, textPredpisu, typPomocky.getText());
+			typPomocky.clear();
 		});
 		
 		uloz.setOnAction(e->{
@@ -107,7 +124,7 @@ public class LekarskeZaznamyGUI extends Stage{
 		
 		
 		skrol.setContent(border);
-		setScene(new Scene(skrol, 770, 600));
+		setScene(new Scene(skrol, 800, 600));
 		show();
 		vypisPacientov.requestFocus();
 	}

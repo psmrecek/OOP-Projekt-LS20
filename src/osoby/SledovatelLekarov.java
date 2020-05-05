@@ -1,4 +1,4 @@
-package poistovna;
+package osoby;
 
 public interface SledovatelLekarov {
 	void upovedom();

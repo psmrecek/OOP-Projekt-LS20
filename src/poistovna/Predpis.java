@@ -1,6 +1,7 @@
 package poistovna;
 
 import java.io.*;
+import java.util.Random;
 
 import osoby.*;
 
@@ -16,6 +17,11 @@ public class Predpis implements Serializable{
 		this.rodnec = rodnec;
 		this.text = text;
 		this.autorLekar = lekar;
+	}
+	
+	public boolean overPlatnost() {
+		Random random = new Random();
+		return random.nextBoolean();
 	}
 	
 	public String zistiMeno() {

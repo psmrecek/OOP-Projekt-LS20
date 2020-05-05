@@ -3,10 +3,8 @@ package osoby;
 import java.io.*;
 
 public class OsobneUdaje implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 0;
+	
 	String meno, adresa, rodnec;
 	char pohlavie;
 	

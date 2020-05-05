@@ -17,7 +17,7 @@ public class Lekarnik implements Serializable, ZistiPrihlasovacieUdaje, ZistiOso
 		nastavPrihlasovacieUdaje(nick, heslo);
 	}
 	
-	public void nacitajPredpisy(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy, TextArea log) {
+	public String nacitajPredpisy(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy) {
 		Pacient pacient = poistovna.najdiPacienta(meno);
 		if (pacient != null) {
 			ArrayList<Predpis> pacientovePredpisy = pacient.vratPredpisy();
@@ -25,10 +25,23 @@ public class Lekarnik implements Serializable, ZistiPrihlasovacieUdaje, ZistiOso
 			for (Predpis predpis : pacientovePredpisy) {
 				predpisy.getItems().add(predpis.zistiText() +" predpisal " + predpis.zistiMenoLekara());
 			}
-			log.appendText(meno+": Recepty boli vypisane.\n");
+			return (meno+": Recepty boli vypisane.\n");
 		} else {
-			log.appendText(meno + " sa v evidencii nenachadza.\n");
+			return (meno + " sa v evidencii nenachadza.\n");
 		}
+	}
+	
+	public String vydatPredpis(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy) {
+		Pacient pacient = poistovna.najdiPacienta(meno);
+		if (predpisy.getSelectionModel().isEmpty()) {
+			return ("Vyber predpis zo zoznamu.\n");
+		} else {
+			int index = predpisy.getSelectionModel().getSelectedIndex();
+			
+			String sprava = "Predpis \"" + predpisy.getSelectionModel().getSelectedItem() + "\" bol vydany.\n";
+			pacient.odstranPredpis(index);
+			return (sprava + this.nacitajPredpisy(poistovna, meno, predpisy));
+		}	
 	}
 
 	@Override

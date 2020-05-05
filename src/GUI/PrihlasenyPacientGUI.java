@@ -84,11 +84,6 @@ public class PrihlasenyPacientGUI extends Stage{
 		pohlavie.setText(String.valueOf(pacient.zistiPohlavie()));
 		pohlavie.setEditable(false);
 		
-//		pane2.add(vymennListokOzn, 0, row);
-//		pane2.add(vymennyListok, 1, row++);
-//		vymennyListok.setText(String.valueOf(pacient.vymennyListok));
-//		vymennyListok.setEditable(false);
-		
 		pane2.add(vypisAktualnychLekarov, 0, row);
 		pane2.add(navsteva, 1, row++);
 		
@@ -143,9 +138,7 @@ public class PrihlasenyPacientGUI extends Stage{
 		border.setPadding(new Insets(10, 10, 10, 10));
 		border.setTop(pane2);
 		border.setBottom(pane4);
-		
-//		pane.add(pane2, 0, 0);
-//		pane.add(pane4, 0, 1);
+
 		pane.add(border, 0, 0);
 		pane.add(pane3, 1, 0);
 		

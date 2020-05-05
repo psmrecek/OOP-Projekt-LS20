@@ -9,7 +9,7 @@ import javafx.geometry.*;
 import osoby.*;
 import poistovna.*;
 
-public class PrihlasenyLekarnik extends Stage{
+public class PrihlasenyLekarnikGUI extends Stage{
 	
 	private Button najdiPacienta = new Button("Najst pacienta");
 	private Button uloz = new Button("Ulozit zmeny");
@@ -29,7 +29,7 @@ public class PrihlasenyLekarnik extends Stage{
 	private ScrollPane skrol = new ScrollPane();
 	
 	
-	public PrihlasenyLekarnik(ZdravotnaPoistovna poistovna, Lekarnik lekarnik) {
+	public PrihlasenyLekarnikGUI(ZdravotnaPoistovna poistovna, Lekarnik lekarnik) {
 		
 		super();
 		
@@ -74,20 +74,12 @@ public class PrihlasenyLekarnik extends Stage{
 		
 		
 		najdiPacienta.setOnAction(e->{
-			lekarnik.nacitajPredpisy(poistovna, meno.getText(), predpisy, log);
+			log.appendText(lekarnik.nacitajPredpisy(poistovna, meno.getText(), predpisy));
 			meno.setEditable(false);
 		});
 		
 		vydatLiek.setOnAction(e->{
-			Pacient pacient = poistovna.najdiPacienta(meno.getText());
-			if (predpisy.getSelectionModel().isEmpty()) {
-				log.appendText("Vyber predpis zo zoznamu.\n");
-			} else {
-				int index = predpisy.getSelectionModel().getSelectedIndex();
-				pacient.odstranPredpis(index);
-				log.appendText("Predpis \"" + predpisy.getSelectionModel().getSelectedItem() + "\" bol vydany.\n");
-				lekarnik.nacitajPredpisy(poistovna, meno.getText(), predpisy, log);
-			}	
+			log.appendText(lekarnik.vydatPredpis(poistovna, meno.getText(), predpisy));
 		});
 		
 		vymazat.setOnAction(e->{
@@ -104,8 +96,6 @@ public class PrihlasenyLekarnik extends Stage{
 				e1.printStackTrace();
 			}
 		});
-		
-		
 		
 		skrol.setContent(pane);
 		setScene(new Scene(skrol, 500, 600));
