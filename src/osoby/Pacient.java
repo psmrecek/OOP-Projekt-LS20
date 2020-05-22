@@ -21,17 +21,38 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	}
 	
 	public void citajPredpisy(ListView<String> predpisyLW) {
-		predpisyLW.getItems().clear();
-		for (Predpis predpis : this.predpisy) {
-			predpisyLW.getItems().add(predpis.citaniePredpisu());
+		Pacient pacient = this;
+		class NovaNit extends Thread{											// Vnorena trieda
+			
+		    public void run() 
+		    { 
+				predpisyLW.getItems().clear();
+				for (Predpis predpis : pacient.predpisy) {
+					predpisyLW.getItems().add(predpis.citaniePredpisu());
+				}
+		    }
+		    
 		}
+		NovaNit nit = new NovaNit();
+		nit.start();
 	}
 	
 	public void citajListky(ListView<String> vymenneListky) {
-		vymenneListky.getItems().clear();
-		for (Listok listok : this.vymenneListky) {
-			vymenneListky.getItems().add("Vymenny listok k " + listok.zistiText()+"-ovi");
+		Pacient pacient = this;
+		class NovaNit extends Thread{											// Vnorena trieda
+			
+		    public void run() 
+		    { 
+				vymenneListky.getItems().clear();
+				for (Listok listok : pacient.vymenneListky) {
+					vymenneListky.getItems().add("Vymenny listok k " + listok.zistiText()+"-ovi");
+				}
+		    }
+		    
 		}
+		
+		NovaNit nit = new NovaNit();
+		nit.start();
 	}
 	
 	public ArrayList<Predpis> vratPredpisy() {

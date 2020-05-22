@@ -74,8 +74,8 @@ public class PrihlasenyLekarnikGUI extends Stage{
 		
 		
 		najdiPacienta.setOnAction(e->{
+			predpisy.getItems().clear();
 			log.appendText(lekarnik.nacitajPredpisy(poistovna, meno.getText(), predpisy));
-			meno.setEditable(false);
 		});
 		
 		vydatLiek.setOnAction(e->{
@@ -84,7 +84,6 @@ public class PrihlasenyLekarnikGUI extends Stage{
 		
 		vymazat.setOnAction(e->{
 			meno.setText("");
-			meno.setEditable(true);
 			predpisy.getItems().clear();
 		});
 		
