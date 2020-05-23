@@ -12,6 +12,12 @@ import javafx.stage.*;
 import osoby.*;
 import poistovna.*;
 
+/**
+ * Hlavny element GUI - prihlasovacie okno. Pouzivatel zada prihlasovacie meno, prihlasovacie heslo, vyberie rolu, v ktorej sa chce prihlasit
+ * a klikne na tlacidlo prihlasit sa. Ak sa chce pouzivatel zaregistrovat ako novy pacient, klikne na prislusne tlacidlo. 
+ * @author PeterSmrecek
+ *
+ */
 public class PrihlasovacieOknoGUI extends Application {
 	private Button prihlasenie = new Button("Prihlasit sa");
 	private Button registracia = new Button("Chcem sa zaregistrovat");
@@ -76,16 +82,16 @@ public class PrihlasovacieOknoGUI extends Application {
 		pane2.add(registracia, 1, 0);
 		
 		flowp.getChildren().add(pane2);
+		
 		prihlasenie.setOnAction(e-> {
+			// prihlasovanie do systemu
 			if (po.isSelected()) {
 				try {
 					if (poistovna.autentifikaciaPoistovne(nick.getText(), heslo.getText())) {
-//						System.out.println("Prihlaseny ako poistovna");
 						new ManazerPoistovneGUI(poistovna);
 					}
 				} catch (NenajdenyUzivatelException ex) {
 					// TODO: handle exception
-//					System.out.println("Zachytil som vynimku.");
 					Alert a = new Alert(AlertType.ERROR);
 					a.setTitle("Chyba");
 					a.setContentText("Prihlasovacie udaje pre manazera poistovne nie su spravne.");
@@ -93,14 +99,12 @@ public class PrihlasovacieOknoGUI extends Application {
 				}
 			} else if (le.isSelected()) {
 				try {
-					Lekar lekar = poistovna.autentifikaciaLekara(nick.getText(), heslo.getText());
+					VseobecnyLekar lekar = poistovna.autentifikaciaLekara(nick.getText(), heslo.getText());
 					if (lekar != null) {
-//						System.out.println("Prihlaseny ako lekar");
 						new LekarskeZaznamyGUI(poistovna, lekar);
 					}
 				} catch (NenajdenyUzivatelException ex) {
 					// TODO Auto-generated catch block
-//					System.out.println("Zachytil som vynimku.");
 					Alert a = new Alert(AlertType.ERROR);
 					a.setTitle("Chyba");
 					a.setContentText("Lekar so zadanymi prihlasovacimi udajmi sa v evidencii nenachadza.");
@@ -112,12 +116,10 @@ public class PrihlasovacieOknoGUI extends Application {
 				try {
 					lekarnik = poistovna.autentifikaciaLekarnika(nick.getText(), heslo.getText());
 					if (lekarnik != null) {
-//						System.out.println("Prihlaseny ako lekarnik");
 						new PrihlasenyLekarnikGUI(poistovna, lekarnik);
 					}
 				} catch (NenajdenyUzivatelException ex) {
 					// TODO Auto-generated catch block
-//					System.out.println("Zachytil som vynimku.");
 					Alert a = new Alert(AlertType.ERROR);
 					a.setTitle("Chyba");
 					a.setContentText("Lekarnik so zadanymi prihlasovacimi udajmi sa v evidencii nenachadza.");
@@ -128,12 +130,10 @@ public class PrihlasovacieOknoGUI extends Application {
 				try {
 					Pacient pacient = poistovna.autentifikaciaPacienta(nick.getText(), heslo.getText());
 					if (pacient != null) {
-//						System.out.println("Prihlaseny ako pacient");
 						new PrihlasenyPacientGUI(poistovna, pacient);
 					}
 				} catch (NenajdenyUzivatelException ex) {
 					// TODO: handle exception
-//					System.out.println("Zachytil som vynimku.");
 					Alert a = new Alert(AlertType.ERROR);
 					a.setTitle("Chyba");
 					a.setContentText("Pacient so zadanymi prihlasovacimi udajmi sa v evidencii nenachadza.");
@@ -143,6 +143,7 @@ public class PrihlasovacieOknoGUI extends Application {
 			}
 		});
 		
+		// registracia noveho pacienta do systemu
 		registracia.setOnAction(e->{
 			new RegistraciaPacientaGUI(poistovna);
 		});

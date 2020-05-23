@@ -5,6 +5,10 @@ import java.util.List;
 
 import osoby.*;
 
+/**
+ * Pomocna funkcia na resetovanie vstupov a nahratie predvolenych vstupov do evidencie.
+ * @author PeterSmrecek
+ */
 public class ResetVstupov implements Serializable{
 	private static final long serialVersionUID = 0;
 	
@@ -12,6 +16,11 @@ public class ResetVstupov implements Serializable{
 		
 	}
 	
+	/**
+	 * Vytvori objekt poistovne a nahra do nej zakladne informacie o lekaroch a pacientoch, zaznamy serializuje.
+	 *  
+	 */
+
 	public void reset() {
 		ZdravotnaPoistovna poistovna = new ZdravotnaPoistovna();
 
@@ -54,8 +63,8 @@ public class ResetVstupov implements Serializable{
   		poistovna.vratLekara(2).evidujPacienta(mojiPacienti.get(7));
   		poistovna.vratLekara(2).evidujPacienta(mojiPacienti.get(8));
   		
-		poistovna.evidujLekarnika("Tomas Maly", "1. Maja 5 Trencin", "562314/1456", 'M', "tomas", "ttt");
-		poistovna.evidujLekarnika("Ulrich Velky", "1. Maja 6 Trencin", "562314/1456", 'M', "ulrich", "uuu");	  		
+		poistovna.evidujLekarnika("Tomas Maly", "1. Maja 5 Trencin", "562314/9774", 'M', "tomas", "ttt");
+		poistovna.evidujLekarnika("Ulrich Velky", "1. Maja 6 Trencin", "653321/6325", 'M', "ulrich", "uuu");	  		
  			
 		
 		try {

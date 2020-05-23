@@ -8,12 +8,17 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 import poistovna.*;
 
-
+/*
+ * Registracne okno pacienta. Pacient sa zaregistruje vyplnenim osobnych udajov a klikne na prislusne tlacidlo.
+ * Tymto ukonom bude zaradeny do evidencie poistovne a bude sa moct potom prihlasit.
+ * @author PeterSmrecek
+ *
+ */
 public class RegistraciaPacientaGUI extends Stage{
 
 	private Button pridajPacienta = new Button("Zaregistrovat sa");
 	private Button uloz = new Button("Ulozit zmeny");
-	private Button vycisTF = new Button("Vycistit");
+	private Button vycisTF = new Button("Vycistit polia");
 	
 	private TextField meno = new TextField();
 	private TextField adresa = new TextField();

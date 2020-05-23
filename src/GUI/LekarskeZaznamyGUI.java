@@ -9,6 +9,13 @@ import javafx.geometry.*;
 import osoby.*;
 import poistovna.*;
 
+/**
+ * Okno prihlaseneho lekara, vseobecneho aj specializovaneho. Lekar moze vypisat zoznam pacientov, zvolit 
+ * pacienta zo zoznamu, vydat mu predpis, vydat mu vymenny listok k specializovanemu lekarovi a ak je 
+ * prihlaseny specializovany lekar moze mu vydat aj predpis na zdravotnicku pomocku.
+ * @author PeterSmrecek
+ *
+ */
 public class LekarskeZaznamyGUI extends Stage{
 	
 	private Button vypisPacientov = new Button("Vypisat zoznam pacientov");
@@ -34,7 +41,7 @@ public class LekarskeZaznamyGUI extends Stage{
 	
 	private ChoiceBox<String> specializacia = new ChoiceBox<String>();
 	
-	public LekarskeZaznamyGUI(ZdravotnaPoistovna poistovna, Lekar lekar) {
+	public LekarskeZaznamyGUI(ZdravotnaPoistovna poistovna, VseobecnyLekar lekar) {
 		
 		super();
 		
@@ -84,8 +91,7 @@ public class LekarskeZaznamyGUI extends Stage{
 		zoznamPacientov.setPrefHeight(height + 40);
 		pane4.add(zoznamPacientov, 0, 1);
 		
-		if (lekar instanceof SpecializovanyLekar) {				// Toto sem nepatri
-			
+		if (lekar instanceof SpecializovanyLekar) {	
 			box2.getChildren().addAll(pomockaOzn, typPomocky);
 			box.getChildren().add(vydajPomocku);
 		}

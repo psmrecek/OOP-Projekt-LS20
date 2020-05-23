@@ -6,7 +6,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import poistovna.*;
 
-public class SpecializovanyLekar extends Lekar{
+/**
+ * Lekar so specializaciou - specializovany lekar. Dedi strukturu udajov z triedy Lekar, ktory ju zdedil z triedy lekarnik. Dokaze pridat pacienta 
+ * do svojej osobnej evidencie. Vydava vymenne listky, vydava predpisy a dokaze vypisat zoznam svojich pacientov. Na rozdiel od vseobecneho lekara dokaze
+ * vydat predpis aj na zdravotnicku pomocku.
+ * @author PeterSmrecek
+ *
+ */
+public class SpecializovanyLekar extends VseobecnyLekar{
 	private static final long serialVersionUID = 0;
 	// Pouzite dedenie
 	
@@ -18,6 +25,10 @@ public class SpecializovanyLekar extends Lekar{
 		this.specializacia = specializacia;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * Pacient sa do evidencie specializovaneho lekara nedostane bez vymenneho listka urceneho pre konkretneho specialistu.
+	 */
 	// Prekonanie metody, pacient je evidovany iba ak ma vymenny listok pre spravneho specialistu
 	@Override
 	public String evidujPacienta(Pacient pacient) {
@@ -33,6 +44,14 @@ public class SpecializovanyLekar extends Lekar{
 		return (pacient.zistiMeno()+" nema vymenny listok k " + this.zistiSpecializaciu() + "-ovi.\n");
 	}
 	
+	/**
+	 * Vytvorenie predpisu na zdravotnicku pomocku konkretnemu pacientovi. 
+	 * Predpis obsahuje text a informacie o lekarovi a pacientovi, ako aj typ zdravotnickej pomocky.
+	 * @param zoznamPacientov		zoznam pacientovv
+	 * @param log					prvok, do ktoreho sa vypise sprava o vykonanej akcii
+	 * @param textPredpisu			text, ktory bude zahrnuty v predpise
+	 * @param typPomocky			typ zdravotnickej pomocky
+	 */
 	public void vytvorPomocku(ListView<String> zoznamPacientov, TextArea log, TextArea textPredpisu, String typPomocky) {
 		if (zoznamPacientov.getSelectionModel().isEmpty()) {
 			log.appendText("Vyber pacienta zo zoznamu.\n");
@@ -41,8 +60,8 @@ public class SpecializovanyLekar extends Lekar{
 			Pacient pacient = this.vratPacienta(index);
 			String text = textPredpisu.getText();
 			textPredpisu.clear();
-			Lekar lekar = this;
-			pacient.pridajPredpis(new ZdravodnickaPomocka(pacient.zistiMeno(), pacient.zistiRodneCislo(), text, lekar, typPomocky));
+			VseobecnyLekar lekar = this;
+			pacient.pridajPredpis(new ZdravotnickaPomocka(pacient.zistiMeno(), pacient.zistiRodneCislo(), text, lekar, typPomocky));
 					// Do predpisov sa nepridava predpis ako od vseobecneho lekara, ale zdravotna pomocka
 			String oslovenie = "Pacientovi ";
 			if (pacient.zistiPohlavie() == 'Z') {
@@ -52,6 +71,10 @@ public class SpecializovanyLekar extends Lekar{
 		}			
 	}
 	
+	/**
+	 * Zistuje specializaciu lekara.
+	 * @return specializacia lekara
+	 */
 	@Override
 	public String zistiSpecializaciu() {
 		return this.specializacia;

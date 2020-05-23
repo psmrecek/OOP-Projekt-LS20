@@ -9,6 +9,14 @@ import javafx.geometry.*;
 import osoby.*;
 import poistovna.*;
 
+/**
+ * Okno prihlaseneho Lekarnika. Lekarnik moze vyhladat pacienta na zaklade mena. 
+ * Vyhladavanie by malo prebiehat podla rodneho cisla, ale pre jednoduchost vyhladavania spamati
+ * je funkcia implementovana na vyhladavanie menom. Lekarnik moze najst pacienta v evidencii, vydat
+ * liek a pokracuje dalej bud s vydavanim liekov pre toho isteho pacienta, alebo pre ineho.
+ * @author PeterSmrecek
+ *
+ */
 public class PrihlasenyLekarnikGUI extends Stage{
 	
 	private Button najdiPacienta = new Button("Najst pacienta");

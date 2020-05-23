@@ -8,13 +8,19 @@ import java.io.*;
 import javafx.geometry.*;
 import poistovna.*;
 
+/**
+ * Okno manazera poistovne. Manazer poistovne moze vypisat zoznam lekarov a zaevidovat noveho vseobecneho, 
+ * alebo specializovaneho lekara do zaznamov poistovne.
+ * @author PeterSmrecek
+ *
+ */
 public class ManazerPoistovneGUI extends Stage{
 	private Button pridajLekara = new Button("Pridat lekara");
 	private Button reset = new Button("Reset");
 	private Button uloz = new Button("Ulozit zmeny");
 	private Button vypisAktualnychLekarov = new Button("Vypisat lekarov");
-	private Button vymazPole = new Button("Vymazat pole");
-	private Button vycisTF = new Button("Vycisti");
+	private Button vymazPole = new Button("Vymazat vypis lekarov");
+	private Button vycisTF = new Button("Vycistit polia");
 	
 	private TextField meno = new TextField();
 	private TextField adresa = new TextField();
@@ -98,7 +104,9 @@ public class ManazerPoistovneGUI extends Stage{
 		pane2.add(vymazPole, 0, row);
 		pane2.add(vycisTF, 1, row++);
 		pane2.add(uloz, 0, row);
-		pane2.add(reset, 1, row++);
+		
+//		pane2.add(reset, 1, row++);				// Tlacidlo resetovania vstupov.
+												// Vo finalnej verzii programu nie je pristupne. Bolo pouzivane ako debugovaci prvok	
 		
 		int velkostButton = 200;
 		vypisAktualnychLekarov.setMinWidth(velkostButton);

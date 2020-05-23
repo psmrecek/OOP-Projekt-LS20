@@ -2,6 +2,11 @@ package osoby;
 
 import java.io.*;
 
+/**
+ * Obsahuje osobne udaje pouzivatela. Instancie tejto triedy su agregovane lekarmi, lekarnikmi aj pacientami.
+ * @author PeterSmrecek
+ *
+ */
 public class OsobneUdaje implements Serializable{
 	private static final long serialVersionUID = 0;
 	

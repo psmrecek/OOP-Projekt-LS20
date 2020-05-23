@@ -11,6 +11,13 @@ import javafx.stage.*;
 import osoby.*;
 import poistovna.*;
 
+/**
+ * Okno prihlaseneho pacienta. Pacient vidi svoje osobne udaje aktualne evidovane zdravotnou poistovnou. Moze vypisat
+ * zoznam lekarov, zoznam predpisov na lieky a zdravotnicke pomocky, ako aj zoznam vymennych listkov prenho vydanych.
+ * Pacient si moze zo zoznamu vybrat lekara a zapisat sa k nemu.
+ * @author PeterSmrecek
+ *
+ */
 public class PrihlasenyPacientGUI extends Stage{
 	private Button navsteva = new Button("Zapisat sa k vybranemu lekarovi");
 	private Button uloz = new Button("Ulozit zmeny");

@@ -5,9 +5,14 @@ import javafx.scene.control.*;
 import osoby.*;
 import poistovna.*;
 
+/*
+ * Element ListView pouzivany v navrhovom vzore Observer. Udrzuje aktualny zoznam lekarov evidovanych zdravotnou poistovnou.
+ * @author PeterSmrecek
+ *
+ */
 public class VypisLekarovGUI extends ListView<String> implements SledovatelLekarov{					// Element GUI aplikujuci navrhovy vzor Observer
 	private ZdravotnaPoistovna poistovna;
-	public List<Lekar> lekari = new ArrayList<>();
+	public List<VseobecnyLekar> lekari = new ArrayList<>();
 	
 	public VypisLekarovGUI(ZdravotnaPoistovna poistovna) {
 		// TODO Auto-generated constructor stub
@@ -21,7 +26,7 @@ public class VypisLekarovGUI extends ListView<String> implements SledovatelLekar
 		// TODO Auto-generated method stub
 		lekari = poistovna.vratZoznamLekarov();
 		this.getItems().clear();
-		for (Lekar lekar : lekari) {
+		for (VseobecnyLekar lekar : lekari) {
 			this.getItems().add(lekar.zistiMeno() +" - "+ lekar.zistiSpecializaciu());
 		}
 	}
