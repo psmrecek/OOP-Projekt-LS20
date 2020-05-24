@@ -18,7 +18,7 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 	private List<VseobecnyLekar> lekari = new ArrayList<>();
 	private List<Pacient> pacienti = new ArrayList<>();
 	
-	transient private List<SledovatelLekarov> sledovatelia = new ArrayList<>();
+	transient private List<SledovatelLekarov> sledovatelia = new ArrayList<>();				// zoznam sledovatelov
 	
 	private PrihlasovacieUdaje priudaje;
 	
@@ -65,7 +65,7 @@ public class ZdravotnaPoistovna implements Serializable, ZistiPrihlasovacieUdaje
 	 * @return lekar, ktory sa prave prihlasil
 	 * @throws NenajdenyUzivatelException ak sa prihlasovacie udaje nezhoduju s prihlasovacimi udajmi ziadneho lekara
 	 */
-	public VseobecnyLekar autentifikaciaLekara(String nick, String heslo) throws NenajdenyUzivatelException {
+	public VseobecnyLekar autentifikaciaLekara(String nick, String heslo) throws NenajdenyUzivatelException {			// vyhadzuje vynimku
 		for (VseobecnyLekar lekar : lekari) {
 			if (lekar.zistiNick().equals(nick)) {
 				if (lekar.zistiHeslo().equals(heslo)) {

@@ -100,6 +100,7 @@ public class LekarskeZaznamyGUI extends Stage{
 		border.setRight(pane4);
 		border.setBottom(pane5);
 		
+		// Pouzitie defaul metody
 		log.appendText(lekar.vsetkyUdaje(lekar.zistiMeno(), lekar.zistiAdresu(), lekar.zistiRodneCislo(), lekar.zistiPohlavie()));
 
 		vypisPacientov.setOnAction(e->{

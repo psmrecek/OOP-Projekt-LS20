@@ -33,7 +33,7 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 	 */
 	public void citajPredpisy(ListView<String> predpisyLW) {
 		Pacient pacient = this;
-		class NovaNit extends Thread{											// Vnorena trieda
+		class NovaNit extends Thread{											// Vnorena trieda s vlastnou nitou
 			
 		    public void run() 
 		    { 
@@ -44,7 +44,7 @@ public class Pacient implements Serializable, ZistiPrihlasovacieUdaje, ZistiOsob
 		    }
 		    
 		}
-		NovaNit nit = new NovaNit();
+		NovaNit nit = new NovaNit();											// Spustenie vlastnej nite
 		nit.start();
 	}
 	

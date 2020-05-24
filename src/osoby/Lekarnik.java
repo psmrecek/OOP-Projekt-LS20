@@ -33,7 +33,7 @@ public class Lekarnik implements Serializable, ZistiPrihlasovacieUdaje, ZistiOso
 	public String nacitajPredpisy(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy) {
 		Pacient pacient = poistovna.najdiPacienta(meno);
 		
-		Sprava sprava = text -> (meno + ": " + text + "\n");
+		Sprava sprava = text -> (meno + ": " + text + "\n");							// Labmda vyraz
 		
 		if (pacient != null) {
 			ArrayList<Predpis> pacientovePredpisy = pacient.vratPredpisy();
@@ -56,7 +56,7 @@ public class Lekarnik implements Serializable, ZistiPrihlasovacieUdaje, ZistiOso
 	 */
 	public String vydatPredpis(ZdravotnaPoistovna poistovna, String meno, ListView<String> predpisy) {
 		Pacient pacient = poistovna.najdiPacienta(meno);
-		Sprava sprava = text -> ("Vydavanie predpisu: " + text + "\n");
+		Sprava sprava = text -> ("Vydavanie predpisu: " + text + "\n");				// Lambda vyraz
 		if (predpisy.getSelectionModel().isEmpty()) {
 			return sprava.pridaj("Zo zoznamu nebol vybraty ziaden predpis.");
 		} else {

@@ -80,7 +80,7 @@ public class PrihlasenyLekarnikGUI extends Stage{
 		pane.getChildren().add(box);
 		pane.getChildren().add(box2);
 		
-		
+		// Event handlery s oddelenou AI od GUI
 		najdiPacienta.setOnAction(e->{
 			predpisy.getItems().clear();
 			log.appendText(lekarnik.nacitajPredpisy(poistovna, meno.getText(), predpisy));

@@ -86,7 +86,7 @@ public class PrihlasovacieOknoGUI extends Application {
 		prihlasenie.setOnAction(e-> {
 			// prihlasovanie do systemu
 			if (po.isSelected()) {
-				try {
+				try {													// osetrovanie vynimky
 					if (poistovna.autentifikaciaPoistovne(nick.getText(), heslo.getText())) {
 						new ManazerPoistovneGUI(poistovna);
 					}
