@@ -1,4 +1,4 @@
-# Projekt z predmetu Objektovo Orientované Programovanie - LS19
+# Projekt z predmetu Objektovo Orientované Programovanie - LS20
 
 Pre návod k projektu a dokumentáciu prosím otvorte súbor Sprava_o_realizacii_projektu-Smrecek.pdf
 
